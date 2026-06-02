@@ -11,7 +11,10 @@ Thesis results:
     CA = 99.8%,  AUC = 0.999,  Spark acceleration = 75%
     (60 s single-machine → 15 s with Spark, 16 jobs, 25 total tasks, 9.6 MB input)
 
-Author : Samer A. Yaghi (The Islamic University of Gaza, 2022)
+Author : Samer Yaghi  |  syaghi@ucas.edu.ps  |  ORCID: 0009-0001-0268-7163
+Supervisor : Prof. Rebhi S. Baraka  |  rbaraka@iugaza.edu.ps  |  Islamic University of Gaza
+Institution: University College of Applied Sciences (UCAS), Gaza, Palestine
+Thesis     : The Effect of Analyzing Big Educational Data on Students Performance (2022)
 """
 
 import argparse
