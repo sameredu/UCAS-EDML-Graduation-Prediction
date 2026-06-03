@@ -3,12 +3,13 @@ message: "If you use this software, please cite it using the metadata below."
 type: software
 
 title: "UCAS Educational Big Data — ML Graduation Prediction"
+
 abstract: >
   PySpark and scikit-learn implementation of a machine learning framework
   for predicting student graduation outcomes in IT majors at the University
   College of Applied Sciences (UCAS), Gaza, Palestine. Applies Decision Tree,
-  Random Forest, and Gradient Boosting Tree algorithms on 19 years of
-  educational data (2000–2019), with Apache Spark for parallel execution.
+  Random Forest, and Gradient Boosting Tree algorithms on educational data,
+  with Apache Spark for distributed processing.
 
 authors:
   - family-names: "Yaghi"
@@ -19,12 +20,12 @@ authors:
 
   - family-names: "Baraka"
     given-names: "Rebhi Soliman"
-    name-suffix: "PhD"
     email: "rbaraka@iugaza.edu.ps"
-    affiliation: "Islamic University of Gaza, Gaza, Palestine"
+    affiliation: "Islamic University of Gaza, Palestine"
 
-repository-code: "https://github.com/samer-yaghi/ucas-edml"
-url: "https://www.researchgate.net/profile/Samer-Yaghi-2"
+repository-code: "https://github.com/sameredu/UCAS-EDML-Graduation-Prediction"
+
+url: "https://github.com/sameredu/UCAS-EDML-Graduation-Prediction"
 
 keywords:
   - educational data mining
@@ -37,23 +38,18 @@ keywords:
   - Apache Spark
   - PySpark
   - higher education
-  - Palestine
 
 license: MIT
 version: "1.0.0"
-date-released: "2022-05-07"
+date-released: "2026-06-03"
 
 preferred-citation:
-  type: thesis
-  thesis-type: "Master's Thesis"
+  type: article
   title: >
-    The Effect of Analyzing Big Educational Data on Students' Performance:
-    The Case of University College of Applied Sciences
+    Using Machine Learning for the Prediction of Graduation in Big Data in Higher Education
   authors:
     - family-names: "Yaghi"
       given-names: "Samer"
       orcid: "https://orcid.org/0009-0001-0268-7163"
-  institution:
-    name: "Islamic University of Gaza"
-    address: "Gaza, Palestine"
-  year: 2022
+  year: 2026
+  note: "Software implementation accompanying the research study"

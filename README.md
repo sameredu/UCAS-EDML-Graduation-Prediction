@@ -24,14 +24,22 @@
 ---
 
 ## Overview
-
-This repository contains the full PySpark and scikit-learn implementation of the machine learning framework presented in the thesis above. It applies three classification algorithms — **Decision Tree (DT)**, **Random Forest (RF)**, and **Gradient Boosting Tree (GBT)** — to predict graduation outcomes for IT-major students at the University College of Applied Sciences (UCAS), Gaza, Palestine.
+This repository contains a scalable machine learning framework for predicting student graduation outcomes in IT majors at UCAS, Gaza, Palestine. The full PySpark and scikit-learn implementation of the machine learning framework presented in the thesis above. It applies three classification algorithms — **Decision Tree (DT)**, **Random Forest (RF)**, and **Gradient Boosting Tree (GBT)** — to predict graduation outcomes for IT-major students at the University College of Applied Sciences (UCAS), Gaza, Palestine.
 
 The dataset covers **19 years of student records (2000–2019)** across four IT specialisations:
 - Programming & Databases
 - Multimedia
 - Web Design & Development
 - Geographic Information Systems (GIS)
+
+
+## Models
+
+- Decision Tree (DT)
+- Random Forest (RF)
+- Gradient Boosting Tree (GBT)
+
+
 
 ---
 
@@ -56,7 +64,7 @@ The dataset covers **19 years of student records (2000–2019)** across four IT 
 ## Repository Structure
 
 ```
-ucas-edml/
+UCAS-EDML-Graduation-Prediction/
 ├── data/
 │   ├── sample_data.csv          # Anonymised 100-record sample
 │   └── data_schema.md           # Full 21-attribute schema
@@ -87,8 +95,8 @@ ucas-edml/
 ### Option A — scikit-learn (no Spark required)
 
 ```bash
-git clone https://github.com/samer-yaghi/ucas-edml.git
-cd ucas-edml
+git clone https://github.com/sameredu/UCAS-EDML-Graduation-Prediction.git
+cd UCAS-EDML-Graduation-Prediction
 pip install -r requirements.txt
 
 # Run best model (Random Forest)
@@ -132,6 +140,9 @@ See [`docs/spark_setup.md`](docs/spark_setup.md) for full cluster configuration.
 
 The full UCAS dataset is subject to institutional data privacy restrictions and is not publicly distributed. An anonymised 100-record sample (`data/sample_data.csv`) is included for testing and demonstration.
 
+- 21 features
+- Binary target: Graduation status
+
 Researchers wishing to access the full dataset should contact:
 
 **University College of Applied Sciences (UCAS)**
@@ -161,22 +172,21 @@ Academic Affairs Office · Gaza, Palestine
 
 ---
 
+
+
 ## Citation
 
-If you use this code or dataset in your research, please cite:
-
-```bibtex
-@mastersthesis{yaghi2022ucas,
-  author    = {Yaghi, Samer A.},
-  title     = {The Effect of Analyzing Big Educational Data on Students' Performance:
-               The Case of University College of Applied Sciences},
-  school    = {Islamic University of Gaza},
-  year      = {2022},
-  address   = {Gaza, Palestine},
-  type      = {Master's Thesis},
-  note      = {Code: https://github.com/samer-yaghi/ucas-edml}
+@software{yaghi2026ucasedml,
+  author = {Yaghi, Samer and Baraka, Rebhi S.},
+  title = {UCAS Educational Big Data — ML Graduation Prediction},
+  year = {2026},
+  url = {https://github.com/sameredu/UCAS-EDML-Graduation-Prediction}
 }
-```
+
+## License
+
+MIT License
+
 
 ---
 
@@ -196,4 +206,4 @@ The dataset (sample only) is provided for academic research purposes.
 
 ---
 
-*Faculty of Information Technology · Islamic University of Gaza · Palestine · 2022*
+*Faculty of Information Technology · University College of Applied Sciences (UCAS) · Islamic University of Gaza · Palestine · 2026*
