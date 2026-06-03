@@ -180,7 +180,7 @@ Academic Affairs Office · Gaza, Palestine
   author = {Yaghi, Samer and Baraka, Rebhi S.},
   title = {UCAS Educational Big Data — ML Graduation Prediction},
   year = {2026},
-  url = [{https://github.com/sameredu/UCAS-EDML-Graduation-Prediction}](https://github.com/sameredu/UCAS-EDML-Graduation-Prediction)
+  url = {[{https://github.com/sameredu/UCAS-EDML-Graduation-Prediction}](https://github.com/sameredu/UCAS-EDML-Graduation-Prediction)
 }
 
 ## License
