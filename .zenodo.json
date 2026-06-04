@@ -1,0 +1,21 @@
+{
+  "title": "UCAS-EDML-Graduation-Prediction: Educational Data Mining and Machine Learning for Graduation Prediction",
+  "description": "A machine learning and educational data mining (EDML) framework developed at the University College of Applied Sciences (UCAS) to predict student graduation timelines and academic success based on historical and behavioral data.",
+  "creators": [
+    {
+      "name": "Samer, Edu",
+      "affiliation": "University College of Applied Sciences (UCAS)"
+    }
+  ],
+  "access_right": "open",
+  "license": "MIT",
+  "keywords": [
+    "educational-data-mining",
+    "machine-learning",
+    "graduation-prediction",
+    "academic-analytics",
+    "ucas",
+    "predictive-modeling"
+  ],
+  "upload_type": "software"
+}
