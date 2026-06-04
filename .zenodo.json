@@ -12,9 +12,10 @@
     "affiliation": "Islamic University of Gaza, Palestine"
     }
   ],
-  "access_right": "open",
   "license": "MIT",
-  "keywords": [
+  "upload_type": "software",
+  "access_right": "open",
+    "keywords": [
     "educational-data-mining",
     "machine-learning",
     "graduation-prediction",
@@ -22,5 +23,7 @@
     "ucas",
     "predictive-modeling"
   ],
-  "upload_type": "software"
+  "communities": [],
+  "version": "1.0.0",
+  "language": "eng"
 }
