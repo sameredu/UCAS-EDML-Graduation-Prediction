@@ -1,263 +1,158 @@
 """
-preprocessing.py
-----------------
-Data preprocessing pipeline for UCAS Educational Big Data.
+Cohort construction and preprocessing.
 
-Covers:
-  - Loading raw CSV data
-  - Encoding categorical variables
-  - Handling missing values
-  - Normalisation
-  - Train / test split (70 / 30)
-  - Optional: data augmentation to simulate big data scale
+ORDERING NOTE — this is the correction at the heart of the paper.
 
-Author : Samer Yaghi  |  syaghi@ucas.edu.ps  |  ORCID: 0009-0001-0268-7163
-Supervisor : Prof. Rebhi S. Baraka  |  rbaraka@iugaza.edu.ps  |  Islamic University of Gaza
-Institution: University College of Applied Sciences (UCAS), Gaza, Palestine
-Thesis     : The Effect of Analyzing Big Educational Data on Students Performance (2022)
-Thesis : The Effect of Analyzing Big Educational Data on Students' Performance
+The released version of the earlier implementation normalised and augmented the
+data BEFORE splitting it, so near-duplicate copies of training records appeared
+in the test partition. Here the order is:
+
+    1. build the cohort
+    2. split  (stratified 70/30)
+    3. fit the scaler on the TRAINING partition only
+    4. augment the TRAINING partition only
+
+`split_scale_augment()` is the only function that produces model-ready arrays,
+and it enforces that order. There is no code path that augments before splitting.
 """
+from __future__ import annotations
 
-import pandas as pd
 import numpy as np
-from sklearn.preprocessing import LabelEncoder, MinMaxScaler
+import pandas as pd
 from sklearn.model_selection import train_test_split
-import warnings
-warnings.filterwarnings("ignore")
+from sklearn.preprocessing import MinMaxScaler
+
+from . import config as C
 
 
-# ── Column constants ──────────────────────────────────────────────────────────
-
-CATEGORICAL_COLS = [
-    "STUDY_TYPE_NAME",   # High school branch
-    "DEPARTMENT_NAME",   # IT major
-    "SEX",               # Gender
-    "STD_ADDRESS",       # Student address (region)
-]
-
-NUMERIC_COLS = [
-    "STD_AVG",
-    "STD_GRADEAVG",
-    "NORMAL_SMTR_COUNT",
-    "SIFI_SMTR_COUNT",
-    "PERCENTAGE",        # High school average
-    "AGE",
-]
-
-TARGET_COL = "STATUS"   # 1 = Graduated, 0 = Not graduated
-
-FEATURE_COLS = CATEGORICAL_COLS + NUMERIC_COLS
-
-# ── Encoding maps (matching thesis preprocessing) ────────────────────────────
-
-BRANCH_MAP = {
-    "literary":    1,
-    "أدبي":        1,
-    "human":       1,
-    "scientific":  2,
-    "علمي":        2,
-    "other":       3,
-    "أخرى":        3,
-    "commercial":  3,
-    "industrial":  3,
-    "leadership":  3,
-}
-
-MAJOR_MAP = {
-    "programming":  1,
-    "برمجة":        1,
-    "web":          2,
-    "تصميم":        2,
-    "multimedia":   3,
-    "وسائط":        3,
-    "gis":          4,
-    "نظم":          4,
-}
-
-GENDER_MAP = {
-    "m": 1, "male": 1, "ذكر": 1,
-    "f": 2, "female": 2, "أنثى": 2,
-}
-
-ADDRESS_MAP = {
-    "north gaza":   1, "شمال غزة": 1,
-    "gaza":         2, "غزة":      2,
-    "middle":       3, "وسط":      3,
-    "khan yunis":   4, "خان يونس": 4,
-    "rafah":        5, "رفح":      5,
-}
-
-STATUS_MAP = {
-    "g": 1, "خريج": 1, "graduated": 1,
-    "r": 0, "منتظم":  0,
-    "d": 0, "مفصول":  0,
-    "c": 0, "منقطع":  0,
-    "w": 0, "منسحب":  0,
-    "s": 0, "مؤجل":   0,
-    "m": 0, "متوفى":  0,
-}
+# --------------------------------------------------------------- loading ----
+def load_raw(path: str) -> pd.DataFrame:
+    """Read the extract. Accepts .csv, .xls/.xlsx or a pandas pickle."""
+    if path.endswith((".xls", ".xlsx")):
+        df = pd.read_excel(path)
+    elif path.endswith(".pkl"):
+        df = pd.read_pickle(path)
+    else:
+        df = pd.read_csv(path, encoding="utf-8-sig")
+    df.columns = [c.strip() for c in df.columns]
+    return df
 
 
-# ── Main preprocessing class ──────────────────────────────────────────────────
+def _branch(value) -> int:
+    v = str(value).strip()
+    if v in C.HS_SCIENTIFIC:
+        return 2
+    if v in C.HS_LITERARY:
+        return 1
+    return 3
 
-class UCASPreprocessor:
-    """Full preprocessing pipeline for UCAS student dataset."""
 
-    def __init__(self, augment_factor: int = 4):
-        """
-        Parameters
-        ----------
-        augment_factor : int
-            Multiply dataset size to simulate big data (thesis used 4x:
-            original 4,704 records → 18,816 records).
-        """
-        self.augment_factor = augment_factor
-        self.scaler = MinMaxScaler()
-        self.label_encoders: dict = {}
-        self.feature_cols_used: list = []
+def build_cohort(df: pd.DataFrame, verbose: bool = True) -> pd.DataFrame:
+    """
+    Three documented filters, applied in order. Each step prints its count so the
+    cohort reported in the paper can be checked line by line.
+    """
+    n0 = len(df)
 
-    # ── Step 1: Load ──────────────────────────────────────────────────────────
+    step1 = df[df["DEPARTMENT_NAME"].isin(C.IT_DEPARTMENTS)].copy()
+    # Applicants who never commenced study: no regular and no summer semesters.
+    step2 = step1[~((step1["NORMAL_SMTR_COUNT"] == 0) & (step1["SIFI_SMTR_COUNT"] == 0))]
+    step3 = step2[step2["STD_AVG"].notna()].reset_index(drop=True)
 
-    def load(self, csv_path: str) -> pd.DataFrame:
-        """Load raw CSV and apply basic type coercions."""
-        df = pd.read_csv(csv_path, encoding="utf-8-sig")
-        df.columns = [c.strip().upper() for c in df.columns]
-        print(f"[load] Loaded {len(df):,} records, {len(df.columns)} columns.")
-        return df
+    if verbose:
+        print(f"  full extract                              {n0:>7,}")
+        print(f"  IT specialisations                        {len(step1):>7,}")
+        print(f"  with at least one semester                {len(step2):>7,}")
+        print(f"  with a recorded cumulative average        {len(step3):>7,}")
 
-    # ── Step 2: Clean ─────────────────────────────────────────────────────────
+    return step3
 
-    def clean(self, df: pd.DataFrame) -> pd.DataFrame:
-        """
-        Remove students who enrolled but never attended any course.
-        (Matches thesis: 'All students who applied but did not study were deleted.')
-        """
-        before = len(df)
-        # Drop if both course counts are zero / null
-        df = df[~((df.get("NORMAL_SMTR_COUNT", pd.Series([1])) == 0) &
-                  (df.get("SIFI_SMTR_COUNT",  pd.Series([1])) == 0))]
-        df = df.dropna(subset=[TARGET_COL])
-        after = len(df)
-        print(f"[clean] Removed {before - after:,} invalid records → {after:,} remain.")
-        return df.reset_index(drop=True)
 
-    # ── Step 3: Encode ────────────────────────────────────────────────────────
+def encode(df: pd.DataFrame) -> pd.DataFrame:
+    """Map the source columns onto the modelling attributes."""
+    out = df.copy()
+    out["MAJOR"] = out["DEPARTMENT_NAME"].map(C.IT_DEPARTMENTS)
+    out["HS_BRANCH"] = out["STUDY_TYPE_NAME"].map(_branch)
+    out["REGION"] = out["STD_ADDRESS"].map(C.REGIONS).fillna(C.REGION_UNKNOWN).astype(int)
+    out["AGE"] = out["AGE"].fillna(out["AGE"].median())
+    out = out.rename(columns={"PERCENTAGE": "HS_SCORE"})
 
-    def encode(self, df: pd.DataFrame) -> pd.DataFrame:
-        """Map categorical text values to numeric codes."""
-        df = df.copy()
+    # Audit-only. Never enters an attribute set; see config.AUDIT_ONLY.
+    out["SEX_C"] = out["SEX"].map({"M": 1, "F": 2}).fillna(1).astype(int)
 
-        # High school branch
-        if "STUDY_TYPE_NAME" in df.columns:
-            df["STUDY_TYPE_NAME"] = (
-                df["STUDY_TYPE_NAME"].str.lower().str.strip()
-                .map(lambda x: next((v for k, v in BRANCH_MAP.items() if k in x), 3))
+    # Leakage attributes, materialised only so that Configuration A can
+    # demonstrate the artefact. GRAD_YEAR_F is 0 exactly when the student did
+    # not graduate, which is why it reproduces the label perfectly.
+    out["GRAD_YEAR_F"] = out["GRADUATE_YEAR"].fillna(0)
+
+    out[C.TARGET] = (out["STATUS"] == C.GRADUATED_CODE).astype(int)
+    return out
+
+
+def prepare(path: str, verbose: bool = True) -> pd.DataFrame:
+    """load → cohort → encode. Returns one row per student."""
+    if verbose:
+        print("Cohort construction")
+    df = build_cohort(load_raw(path), verbose=verbose)
+    return encode(df)
+
+
+# ------------------------------------------------------------ augmentation ---
+def augment(X: np.ndarray, y: np.ndarray, numeric_idx: list[int],
+            factor: int = C.AUGMENT_FACTOR, sigma: float = C.AUGMENT_SIGMA,
+            seed: int = C.SEED):
+    """
+    Replicate the rows `factor` times, adding Gaussian noise to the scaled
+    numeric columns. Applied to the TRAINING partition only.
+
+    Reported in the paper as a negative control: it reduces accuracy for all
+    three classifiers, so the un-augmented results are the primary ones.
+    """
+    if factor <= 1:
+        return X, y
+    rng = np.random.default_rng(seed)
+    Xs, ys = [X], [y]
+    for _ in range(factor - 1):
+        Xn = X.copy()
+        noise = rng.normal(0, sigma, size=(X.shape[0], len(numeric_idx)))
+        Xn[:, numeric_idx] = np.clip(Xn[:, numeric_idx] + noise, 0, 1)
+        Xs.append(Xn)
+        ys.append(y)
+    return np.vstack(Xs), np.concatenate(ys)
+
+
+# ------------------------------------------------------------- the pipeline --
+def split_scale_augment(df: pd.DataFrame, features: list[str],
+                        augment_factor: int = 1, seed: int = C.SEED):
+    """
+    The leakage-free pipeline, in the only order this module permits.
+
+    Returns (X_train, X_test, y_train, y_test, test_index).
+    `test_index` indexes back into `df` so the fairness audit can partition the
+    test set by an attribute the model never saw.
+    """
+    for f in features:
+        if f in C.AUDIT_ONLY:
+            raise ValueError(
+                f"{f} is audit-only and must not be used as a model input"
             )
 
-        # IT major
-        if "DEPARTMENT_NAME" in df.columns:
-            df["DEPARTMENT_NAME"] = (
-                df["DEPARTMENT_NAME"].str.lower().str.strip()
-                .map(lambda x: next((v for k, v in MAJOR_MAP.items() if k in x), 1))
-            )
+    X = df[features].to_numpy(dtype=float)
+    y = df[C.TARGET].to_numpy()
+    idx = np.arange(len(df))
 
-        # Gender
-        if "SEX" in df.columns:
-            df["SEX"] = (
-                df["SEX"].str.lower().str.strip()
-                .map(GENDER_MAP).fillna(1).astype(int)
-            )
+    # 1. SPLIT FIRST — before any transformation touches the data.
+    i_tr, i_te = train_test_split(
+        idx, test_size=C.TEST_SIZE, random_state=seed, stratify=y
+    )
 
-        # Address / region
-        if "STD_ADDRESS" in df.columns:
-            df["STD_ADDRESS"] = (
-                df["STD_ADDRESS"].str.lower().str.strip()
-                .map(lambda x: next((v for k, v in ADDRESS_MAP.items() if k in x), 2))
-            )
+    # 2. Fit the scaler on the training partition only.
+    scaler = MinMaxScaler().fit(X[i_tr])
+    X_tr, X_te = scaler.transform(X[i_tr]), scaler.transform(X[i_te])
+    y_tr, y_te = y[i_tr], y[i_te]
 
-        # Target label
-        df[TARGET_COL] = (
-            df[TARGET_COL].astype(str).str.lower().str.strip()
-            .map(STATUS_MAP).fillna(0).astype(int)
-        )
+    # 3. Augment the training partition only.
+    numeric_idx = [i for i, f in enumerate(features) if f in C.NUMERIC]
+    X_tr, y_tr = augment(X_tr, y_tr, numeric_idx, factor=augment_factor, seed=seed)
 
-        print(f"[encode] Graduation rate: "
-              f"{df[TARGET_COL].mean()*100:.1f}% "
-              f"({df[TARGET_COL].sum():,} / {len(df):,})")
-        return df
-
-    # ── Step 4: Normalise ─────────────────────────────────────────────────────
-
-    def normalise(self, df: pd.DataFrame, fit: bool = True) -> pd.DataFrame:
-        """Min-max normalise numeric features."""
-        df = df.copy()
-        num_cols = [c for c in NUMERIC_COLS if c in df.columns]
-        df[num_cols] = df[num_cols].fillna(df[num_cols].median())
-        if fit:
-            df[num_cols] = self.scaler.fit_transform(df[num_cols])
-        else:
-            df[num_cols] = self.scaler.transform(df[num_cols])
-        return df
-
-    # ── Step 5: Augment ───────────────────────────────────────────────────────
-
-    def augment(self, df: pd.DataFrame) -> pd.DataFrame:
-        """
-        Multiply the dataset to simulate big data scale.
-        Thesis: original 4,704 records were amplified to 18,896
-        (factor ≈ 4) with minor Gaussian noise on numeric columns.
-        """
-        if self.augment_factor <= 1:
-            return df
-        num_cols = [c for c in NUMERIC_COLS if c in df.columns]
-        copies = [df]
-        rng = np.random.default_rng(seed=42)
-        for _ in range(self.augment_factor - 1):
-            noisy = df.copy()
-            noise = rng.normal(0, 0.01, size=(len(df), len(num_cols)))
-            noisy[num_cols] = np.clip(noisy[num_cols].values + noise, 0, 1)
-            copies.append(noisy)
-        big = pd.concat(copies, ignore_index=True)
-        print(f"[augment] Dataset amplified: {len(df):,} → {len(big):,} records.")
-        return big
-
-    # ── Step 6: Split ─────────────────────────────────────────────────────────
-
-    def split(self, df: pd.DataFrame):
-        """70 / 30 stratified train-test split."""
-        available = [c for c in FEATURE_COLS if c in df.columns]
-        self.feature_cols_used = available
-        X = df[available].values
-        y = df[TARGET_COL].values
-        X_train, X_test, y_train, y_test = train_test_split(
-            X, y, test_size=0.30, random_state=42, stratify=y
-        )
-        print(f"[split] Train: {len(X_train):,}  |  Test: {len(X_test):,}")
-        return X_train, X_test, y_train, y_test
-
-    # ── Full pipeline ─────────────────────────────────────────────────────────
-
-    def run(self, csv_path: str):
-        """Execute all preprocessing steps and return train/test arrays."""
-        df = self.load(csv_path)
-        df = self.clean(df)
-        df = self.encode(df)
-        df = self.normalise(df, fit=True)
-        df = self.augment(df)
-        return self.split(df)
-
-
-# ── CLI ───────────────────────────────────────────────────────────────────────
-
-if __name__ == "__main__":
-    import argparse, os
-    parser = argparse.ArgumentParser(description="UCAS data preprocessing")
-    parser.add_argument("--data", default="data/sample_data.csv")
-    parser.add_argument("--no-augment", action="store_true")
-    args = parser.parse_args()
-
-    prep = UCASPreprocessor(augment_factor=1 if args.no_augment else 4)
-    X_train, X_test, y_train, y_test = prep.run(args.data)
-    print(f"\nFeatures used ({len(prep.feature_cols_used)}): {prep.feature_cols_used}")
-    print(f"X_train shape: {X_train.shape}")
-    print(f"X_test  shape: {X_test.shape}")
+    return X_tr, X_te, y_tr, y_te, i_te

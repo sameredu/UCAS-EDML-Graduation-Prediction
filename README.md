@@ -1,209 +1,150 @@
-# UCAS Educational Big Data — ML Graduation Prediction
+# Target leakage in graduation prediction from administrative records
 
-[![Python](https://img.shields.io/badge/Python-3.7%2B-blue)](https://python.org)
-[![PySpark](https://img.shields.io/badge/Apache%20Spark-3.x-orange)](https://spark.apache.org)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green)](LICENSE)
-[![ORCID](https://img.shields.io/badge/ORCID-0009--0001--0268--7163-brightgreen)](https://orcid.org/0009-0001-0268-7163)
-[![ResearchGate](https://img.shields.io/badge/ResearchGate-Samer--Yaghi-00CCBB)](https://www.researchgate.net/profile/Samer-Yaghi-2)
+Reference implementation for:
 
-> **Companion code for:**
->
-> Yaghi, S., & Baraka, R. (2022). *The Effect of Analyzing Big Educational Data on Students' Performance: The Case of University College of Applied Sciences*. Master's Thesis, Islamic University of Gaza.
+> Yaghi, S., & Baraka, R. S. *Target Leakage in Machine Learning Models that Predict Higher Education Graduation from Administrative Records.* (under review)
+
+Twenty years of institutional records from the University College of Applied Sciences (UCAS) in Gaza, Palestine — 4,704 students across four IT specialisations, 2000–2019.
 
 ---
 
-## Authors
+## What this repository shows
 
-| Name | Affiliation | Email | ORCID |
-|------|------------|-------|-------|
-| **Samer Yaghi** | University College of Applied Sciences (UCAS) · Islamic University of Gaza | syaghi@ucas.edu.ps | [0009-0001-0268-7163](https://orcid.org/0009-0001-0268-7163) |
-| **Prof. Rebhi S. Baraka** | Islamic University of Gaza | rbaraka@iugaza.edu.ps | — |
+Two attributes held in almost every student information system are **deterministic functions of the graduation outcome**:
 
-🔗 ResearchGate: [Samer Yaghi](https://www.researchgate.net/profile/Samer-Yaghi-2)
+| Attribute | Why it leaks |
+|---|---|
+| `GRADUATE_YEAR` | Recorded only for students who graduated — null for every non-graduate |
+| `STD_GRADEAVG` | Equals `STD_AVG` for every non-graduate; differs only once a student graduates |
 
----
-
-## Overview
-This repository contains a scalable machine learning framework for predicting student graduation outcomes in IT majors at UCAS, Gaza, Palestine. The full PySpark and scikit-learn implementation of the machine learning framework presented in the thesis above. It applies three classification algorithms — **Decision Tree (DT)**, **Random Forest (RF)**, and **Gradient Boosting Tree (GBT)** — to predict graduation outcomes for IT-major students at the University College of Applied Sciences (UCAS), Gaza, Palestine.
-
-The dataset covers **19 years of student records (2000–2019)** across four IT specialisations:
-- Programming & Databases
-- Multimedia
-- Web Design & Development
-- Geographic Information Systems (GIS)
-
-
-## Models
-
-- Decision Tree (DT)
-- Random Forest (RF)
-- Gradient Boosting Tree (GBT)
-
-
-
----
-
-## Key Results
-
-| Algorithm | Accuracy (CA) | AUC | F1 | Precision | Recall | Spark Speed-up |
-|-----------|:---:|:---:|:---:|:---:|:---:|:---:|
-| **Random Forest** | **99.8%** | **0.999** | **0.998** | **0.998** | **0.998** | **75%** |
-| Decision Tree | 97.1% | 0.979 | 0.971 | 0.972 | 0.971 | 58.9% |
-| GBT Classifier | 93.0% | 0.965 | 0.923 | 0.931 | 0.930 | 72.9% |
-
-**Top graduation predictors (Pearson correlation with STATUS):**
-
-| # | Feature | r | Description |
-|---|---------|---|-------------|
-| 1 | `STD_AVG` | +0.997 | University cumulative GPA |
-| 2 | `NORMAL_SMTR_COUNT` | +0.489 | Number of regular semesters |
-| 3 | `SIFI_SMTR_COUNT` | +0.266 | Number of summer semesters |
-
----
-
-## Repository Structure
+Keep them, and a depth-limited decision tree, a bagged ensemble and a boosted ensemble all reach **exactly 100% accuracy with a cross-validation standard deviation of zero**. Drop them, and the same three models land in the high eighties.
 
 ```
-UCAS-EDML-Graduation-Prediction/
-├── data/
-│   ├── sample_data.csv          # Anonymised 100-record sample
-│   └── data_schema.md           # Full 21-attribute schema
-├── notebooks/
-│   ├── 01_exploratory_analysis.ipynb
-│   ├── 02_preprocessing.ipynb
-│   ├── 03_ml_models.ipynb
-│   └── 04_spark_acceleration.ipynb
-├── src/
-│   ├── preprocessing.py         # Full data pipeline
-│   ├── decision_tree.py         # DT — sklearn + PySpark
-│   ├── random_forest.py         # RF — sklearn + PySpark
-│   ├── gbt_classifier.py        # GBT — sklearn + PySpark
-│   ├── spark_pipeline.py        # All 3 algorithms in one Spark job
-│   └── evaluation.py            # Metrics, confusion matrix, ROC plots
-├── results/
-│   └── confusion_matrices/
-├── docs/
-│   └── spark_setup.md           # Cluster setup (Windows + Linux)
-├── requirements.txt
-└── README.md
+CONFIGURATION A: with leakage attributes
+  Random Forest    100.00   AUC 1.000   5-fold CV 100.00 +/- 0.00
+  Decision Tree    100.00   AUC 1.000   5-fold CV 100.00 +/- 0.00
+  GBT Classifier   100.00   AUC 1.000   5-fold CV 100.00 +/- 0.00
+
+CONFIGURATION B: corrected (full record)
+  Random Forest     88.81   AUC 0.954   5-fold CV  88.67 +/- 0.58
+  Decision Tree     87.18   AUC 0.933   5-fold CV  87.29 +/- 0.54
+  GBT Classifier    89.16   AUC 0.955   5-fold CV  88.50 +/- 0.62
+
+CONFIGURATION C: pre-enrolment attributes only
+  Random Forest     67.92   AUC 0.747   5-fold CV  68.30 +/- 1.30
+  Decision Tree     67.28   AUC 0.738   5-fold CV  68.13 +/- 0.77
+  GBT Classifier    70.47   AUC 0.769   5-fold CV  70.39 +/- 0.66
 ```
+
+**The diagnostic worth taking away:** near-perfect accuracy across structurally different model families, combined with negligible cross-validation variance, is a signature of leakage rather than of a well-fitted model. Three learners that disagree about everything else do not agree perfectly unless one attribute is resolving the problem for all of them. `src/evaluation.py:leakage_check()` computes the arithmetic rather than asserting it.
 
 ---
 
-## Quick Start
+## Relationship to the earlier version
 
-### Option A — scikit-learn (no Spark required)
+This repository **supersedes** the implementation released with the first author's master's thesis, which reported 99.8% accuracy. That figure is the artefact diagnosed here. Two things were wrong in the earlier code:
+
+1. **Ordering.** Normalisation and augmentation ran *before* the train/test split, so near-duplicate copies of training records appeared in the test partition.
+2. **Attribute set.** `GRADUATE_YEAR` and `STD_GRADEAVG` were retained as model inputs.
+
+Both are corrected here. `preprocessing.split_scale_augment()` is the only function that produces model-ready arrays and it enforces split → scale → augment; there is no code path that augments before splitting. The leakage attributes are materialised only for Configuration A, which exists to demonstrate the failure and is never presented as a result.
+
+Results from the earlier version should not be cited as independent corroboration of the results here.
+
+---
+
+## Running it
 
 ```bash
-git clone https://github.com/sameredu/UCAS-EDML-Graduation-Prediction.git
-cd UCAS-EDML-Graduation-Prediction
 pip install -r requirements.txt
 
-# Run best model (Random Forest)
-python src/random_forest.py --data data/sample_data.csv
+python run_all.py --data data/sample_data.csv        # bundled 402-record sample
+python run_all.py --data /path/to/full_extract.xls   # full dataset
 
-# Compare all three algorithms
-python -c "
-from src.preprocessing import UCASPreprocessor
-from src.random_forest import run_sklearn_rf
-from src.decision_tree import run_sklearn_dt
-from src.gbt_classifier import run_sklearn_gbt
-
-rf,  *_ = run_sklearn_rf('data/sample_data.csv')
-dt,  *_ = run_sklearn_dt('data/sample_data.csv')
-gbt, *_ = run_sklearn_gbt('data/sample_data.csv')
-"
+python -m src.figures --data /path/to/full_extract.xls --out results/figures
 ```
 
-### Option B — Apache Spark (cluster)
+`run_all.py` prints every table in the paper and writes `results/results.json`. With the full extract it reproduces the reported figures exactly; `--seed` is fixed at 42 throughout.
 
-```bash
-# Start Master node
-spark-class org.apache.spark.deploy.master.Master
+### About the bundled data
 
-# Start each Worker node (replace MASTER_IP)
-spark-class org.apache.spark.deploy.worker.Worker spark://MASTER_IP:7077
+`data/sample_data.csv` is **synthetic**. The 400 records correspond to no real
+student. We measured re-identification risk on an anonymised draw from the real
+cohort first: on the full quasi-identifier set roughly three records in four were
+unique, and on recorded sex plus specialisation plus exact GPA nearly nine in
+ten. Publishing that would have let anyone who knew a former classmate's
+enrolment year and major recover their exact GPA and graduation outcome, so the
+sample is generated instead — see `data/README.md` and `src/make_sample.py`.
 
-# Submit full pipeline
-spark-submit src/spark_pipeline.py \
-    --master spark://MASTER_IP:7077 \
-    --data data/ucas_data.csv
+The synthetic sample preserves the structure this repository demonstrates: the
+outcome mix, and the two leakage relationships exactly. Run `run_all.py` on it
+and Configuration A still reaches 100% across all three models, which is the
+claim you can verify for yourself without any real data.
 
-# Monitor jobs at: http://MASTER_IP:8080
+It does **not** reproduce the paper's point estimates — 400 records give
+confidence intervals three times wider. **The published results come from the
+full dataset and are committed to `results/`**: `results_full.json`,
+`results_full.txt` and the six figures in `results/figures/`.
+
+---
+
+## Layout
+
+```
+src/config.py          cohort filter, the three attribute configurations,
+                       hyperparameters, seed — nothing derived from the outcome
+src/preprocessing.py   cohort construction; split -> scale -> augment, in that order
+src/models.py          the three classifiers
+src/evaluation.py      Wilson intervals, stratified CV, McNemar, correlations,
+                       the leakage check and the fairness audit
+src/experiments.py     the experiments, mapped to the tables they produce
+src/figures.py         the six figures
+run_all.py             reproduces everything
+src/make_sample.py     generates the synthetic sample
+data/sample_data.csv   synthetic sample, illustrative only
+results/               the published outputs, from the full dataset
 ```
 
-See [`docs/spark_setup.md`](docs/spark_setup.md) for full cluster configuration.
+---
+
+## Attribute handling
+
+**Modelled (Configuration B).** Age at enrolment, high-school branch, high-school score, IT major, region of residence, regular semesters completed, summer semesters completed, cumulative GPA.
+
+**Excluded on leakage grounds.** `GRADUATE_YEAR`, `STD_GRADEAVG`.
+
+**Audit only — never a model input.** Recorded sex. The source system stores a binary administrative field; it is not self-reported and does not represent gender identity. It is held out of every attribute set so that no prediction is conditioned on it, and used only to partition the test set for the subgroup audit. `split_scale_augment()` raises if it is passed as a feature.
+
+Withholding it costs nothing: Random Forest accuracy *rises* from 88.31% to 88.81%, Gradient Boosting falls from 89.38% to 89.16% — both well inside the confidence intervals. The subgroup disparity persists anyway (demographic parity difference ≈ −0.11), which locates it in the enrolment-history attributes rather than in the model.
 
 ---
 
-## Dataset
+## Two findings that are easy to miss
 
-The full UCAS dataset is subject to institutional data privacy restrictions and is not publicly distributed. An anonymised 100-record sample (`data/sample_data.csv`) is included for testing and demonstration.
+**Augmentation hurts.** Gaussian-noise augmentation of the training set reduces accuracy for all three classifiers, by 0.71 to 1.91 points. It is reported as a negative control, not as a method. Replicating 3,292 records adds no information the originals do not already carry.
 
-- 21 features
-- Binary target: Graduation status
-
-Researchers wishing to access the full dataset should contact:
-
-**University College of Applied Sciences (UCAS)**
-Academic Affairs Office · Gaza, Palestine
-[www.ucas.edu.ps](https://www.ucas.edu.ps)
-
-### Schema (21 attributes)
-
-| # | Attribute | Type | Description |
-|---|-----------|------|-------------|
-| 1 | `STUDY_TYPE_NAME` | Categorical | HS branch: 1=Literary, 2=Scientific, 3=Other |
-| 2 | `DEPARTMENT_NAME` | Categorical | IT major: 1=Prog&DB, 2=Web, 3=Multimedia, 4=GIS |
-| 3 | `STUDY_YEAR` | Int | Year of enrolment [2000–2019] |
-| 4 | `STD_AVG` | Float | University cumulative GPA [35–100] |
-| 5 | `STD_GRADEAVG` | Float | Graduate average [60–100] |
-| 6 | `STD_ADDRESS` | Categorical | Region: 1=N.Gaza … 5=Rafah |
-| 7 | `SEX` | Binary | 1=Male, 2=Female |
-| 8 | `AGE` | Int | Student age [18–60] |
-| 9 | `PERCENTAGE` | Float | High school average [50–100] |
-| 10 | `TAW_YEAR` | Int | Year of HS diploma |
-| 11 | `BIRTH_DATE` | Int | Year of birth |
-| 12 | `NORMAL_SMTR_COUNT` | Int | Regular semesters [0–12] |
-| 13 | `SIFI_SMTR_COUNT` | Int | Summer semesters [0–4] |
-| 14 | `GRADUATE_YEAR` | Int | Graduation year (NULL if not graduated) |
-| 15–16 | `YEAR_SMTR`, `STUDYPLAN_NO` | Int | Academic year / study plan ID |
-| **17** | **`STATUS`** | **Binary** | **Target: 1=Graduated, 0=Not graduated** |
+**Persistence beats attainment.** The number of regular semesters completed is the dominant attribute in all three models (RF 0.339, DT 0.628, GBT 0.570), ahead of cumulative GPA (0.246, 0.152, 0.180). The earlier ranking put GPA first — an appearance produced by the leaked graduate-GPA attribute.
 
 ---
 
+## Known limitation in the data
 
-
-## Citation
-
-@software{yaghi2026ucasedml,
-  author = {Yaghi, Samer and Baraka, Rebhi S.},
-  title = {UCAS Educational Big Data — ML Graduation Prediction},
-  year = {2026},
-  url = {[{https://github.com/sameredu/UCAS-EDML-Graduation-Prediction}](https://github.com/sameredu/UCAS-EDML-Graduation-Prediction)
-}
-
-## License
-
-MIT License
-
+Students still enrolled at extraction (21.83% of the cohort) are coded as non-graduates, which conflates *has not graduated yet* with *will not graduate*. The age-at-enrolment split that appears high in the decision tree is the visible trace of this censoring, and should not be read as evidence that older entrants perform better. A censoring-aware survival formulation would be preferable and is not implemented here.
 
 ---
 
-## Related Links
+## Data availability
 
-- 📄 ResearchGate: [researchgate.net/profile/Samer-Yaghi-2](https://www.researchgate.net/profile/Samer-Yaghi-2)
-- 🔬 ORCID: [orcid.org/0009-0001-0268-7163](https://orcid.org/0009-0001-0268-7163)
-- 🏛️ UCAS: [ucas.edu.ps](https://www.ucas.edu.ps)
-- 🏛️ IUG: [iugaza.edu.ps](https://www.iugaza.edu.ps)
+`data/sample_data.csv` is synthetic and illustrative; it carries no information
+about any individual. The full dataset is held by the UCAS Academic Affairs
+Office and available under a data sharing agreement. Student identifiers were
+replaced with anonymous IDs before any analysis, and the cohort is not
+redistributable even so — `data/README.md` sets out the measured
+re-identification risk that led to that decision.
 
----
+The results and figures reported in the paper were produced from the full
+dataset and are committed under `results/`.
 
-## License
+## Licence
 
-This code is released under the [MIT License](LICENSE).
-The dataset (sample only) is provided for academic research purposes.
-
----
-
-*Faculty of Information Technology · University College of Applied Sciences (UCAS) · Islamic University of Gaza · Palestine · 2026*
+MIT — see `LICENSE`.

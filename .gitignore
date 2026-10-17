@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+
+# results/ IS tracked: it carries the published outputs from the full dataset.
+# Runs against the synthetic sample write elsewhere by default.

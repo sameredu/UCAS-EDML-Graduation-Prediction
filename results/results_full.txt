@@ -1,0 +1,100 @@
+======================================================================================
+COHORT
+======================================================================================
+  analytical cohort                         4,704
+  train / test                              3,292 / 1,412
+  graduated                                 1,826   (38.82%)
+  recorded sex (audit only)              73.53% male / 26.47% female
+
+======================================================================================
+LEAKAGE DIAGNOSTIC   (Section 5.2)
+======================================================================================
+  graduation year recorded, graduates          1,826 / 1,826
+  graduation year recorded, non-graduates          0 / 2,878
+  reproduces the label exactly                  True
+  graduate GPA equals cumulative GPA          100.0% of non-graduates
+
+======================================================================================
+CONFIGURATION A: with leakage attributes
+======================================================================================
+  model              CA %            95% CI    AUC     F1  Recall    FN   aug x4         5-fold CV
+  Random Forest    100.00     [99.7, 100.0]  1.000  1.000   1.000     0   100.00   100.00 +/- 0.00
+  Decision Tree    100.00     [99.7, 100.0]  1.000  1.000   1.000     0   100.00   100.00 +/- 0.00
+  GBT Classifier   100.00     [99.7, 100.0]  1.000  1.000   1.000     0   100.00   100.00 +/- 0.00
+  McNemar:
+    Random Forest vs Decision Tree       undefined: no discordant predictions
+    Random Forest vs GBT Classifier      undefined: no discordant predictions
+    Decision Tree vs GBT Classifier      undefined: no discordant predictions
+
+======================================================================================
+CONFIGURATION B: corrected (full record)
+======================================================================================
+  model              CA %            95% CI    AUC     F1  Recall    FN   aug x4         5-fold CV
+  Random Forest     88.81      [87.1, 90.4]  0.954  0.859   0.880    66    86.90    88.67 +/- 0.58
+  Decision Tree     87.18      [85.3, 88.8]  0.933  0.845   0.898    56    86.47    87.29 +/- 0.54
+  GBT Classifier    89.16      [87.4, 90.7]  0.955  0.862   0.874    69    87.75    88.50 +/- 0.62
+  McNemar:
+    Random Forest vs Decision Tree       chi2 =   4.889   p = 0.0270    significant
+    Random Forest vs GBT Classifier      chi2 =   0.246   p = 0.6198    not significant
+    Decision Tree vs GBT Classifier      chi2 =   7.290   p = 0.0069    significant
+
+======================================================================================
+CONFIGURATION C: pre-enrolment only
+======================================================================================
+  model              CA %            95% CI    AUC     F1  Recall    FN   aug x4         5-fold CV
+  Random Forest     67.92      [65.4, 70.3]  0.747  0.559   0.524   261    67.78    68.30 +/- 1.30
+  Decision Tree     67.28      [64.8, 69.7]  0.738  0.534   0.484   283    66.50    68.13 +/- 0.77
+  GBT Classifier    70.47      [68.0, 72.8]  0.769  0.599   0.568   237    67.28    70.39 +/- 0.66
+  McNemar:
+    Random Forest vs Decision Tree       chi2 =   0.214   p = 0.6436    not significant
+    Random Forest vs GBT Classifier      chi2 =   4.823   p = 0.0281    significant
+    Decision Tree vs GBT Classifier      chi2 =  10.579   p = 0.0011    significant
+
+======================================================================================
+FEATURE IMPORTANCE   (Configuration B)
+======================================================================================
+  attribute                     Random Forest    Decision Tree   GBT Classifier
+  Regular semesters                     0.339            0.628            0.570
+  Cumulative GPA                        0.246            0.152            0.180
+  Age at enrolment                      0.183            0.181            0.186
+  Summer semesters                      0.097            0.023            0.044
+  High-school score                     0.078            0.013            0.015
+  Region of residence                   0.020            0.002            0.002
+  IT major                              0.020            0.000            0.003
+  High-school branch                    0.018            0.000            0.000
+
+  decision tree: 79 nodes, 40 leaves
+
+======================================================================================
+CORRELATION WITH GRADUATION   (Table 2)
+======================================================================================
+  Graduation year (leakage) r = +1.0000   p = < 0.001     <- excluded (leakage)
+  Regular semesters         r = +0.5461   p = < 0.001  
+  Graduate GPA (leakage)    r = +0.4838   p = < 0.001     <- excluded (leakage)
+  Summer semesters          r = +0.4716   p = < 0.001  
+  Cumulative GPA            r = +0.4497   p = < 0.001  
+  High-school branch        r = +0.1697   p = < 0.001  
+  Region of residence       r = -0.0810   p = < 0.001  
+  Recorded sex              r = +0.0689   p = < 0.001     <- audit only
+  Age at enrolment          r = +0.0324   p = 0.0262   
+  High-school score         r = +0.0230   p = 0.1151   
+  IT major                  r = +0.0081   p = 0.5797   
+
+======================================================================================
+FAIRNESS AUDIT BY RECORDED SEX   (Section 5.9)
+======================================================================================
+  recorded sex is NOT an input to any model; it partitions the test set only
+
+  model           group         n   acc %     TPR     FNR     FPR   select    base
+  Random Forest   male       1041   87.22   0.864   0.136   0.123    0.394   0.366
+                  female      371   85.98   0.904   0.096   0.176    0.504   0.450
+                  M - F                    -0.041                   -0.110  -0.084
+  Decision Tree   male       1041   86.36   0.869   0.131   0.139    0.406   0.366
+                  female      371   86.79   0.922   0.078   0.176    0.512   0.450
+                  M - F                    -0.053                   -0.106  -0.084
+  GBT Classifier  male       1041   87.42   0.885   0.115   0.132    0.407   0.366
+                  female      371   88.68   0.952   0.048   0.167    0.520   0.450
+                  M - F                    -0.068                   -0.113  -0.084
+
+Full results written to /dev/null
+

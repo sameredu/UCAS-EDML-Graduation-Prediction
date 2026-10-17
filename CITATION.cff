@@ -1,55 +1,25 @@
 cff-version: 1.2.0
-message: "If you use this software, please cite it using the metadata below."
+title: "UCAS-EDML: target leakage in graduation prediction from administrative records"
+message: "If you use this software, please cite the accompanying article."
 type: software
-
-title: "UCAS Educational Big Data — ML Graduation Prediction"
-
-abstract: >
-  PySpark and scikit-learn implementation of a machine learning framework
-  for predicting student graduation outcomes in IT majors at the University
-  College of Applied Sciences (UCAS), Gaza, Palestine. Applies Decision Tree,
-  Random Forest, and Gradient Boosting Tree algorithms on educational data,
-  with Apache Spark for distributed processing.
-
 authors:
-  - family-names: "Yaghi"
-    given-names: "Samer"
-    email: "syaghi@ucas.edu.ps"
+  - family-names: Yaghi
+    given-names: Samer
     orcid: "https://orcid.org/0009-0001-0268-7163"
-    affiliation: "University College of Applied Sciences (UCAS), Gaza, Palestine"
-
-  - family-names: "Baraka"
-    given-names: "Rebhi Soliman"
-    email: "rbaraka@iugaza.edu.ps"
-    affiliation: "Islamic University of Gaza, Palestine"
-
-repository-code: "https://github.com/sameredu/UCAS-EDML-Graduation-Prediction"
-
-url: "https://github.com/sameredu/UCAS-EDML-Graduation-Prediction"
-
-keywords:
-  - educational data mining
-  - big data
-  - machine learning
-  - student performance prediction
-  - Random Forest
-  - Decision Tree
-  - Gradient Boosting Tree
-  - Apache Spark
-  - PySpark
-  - higher education
-
+    affiliation: "University College of Applied Sciences, Gaza, Palestine"
+  - family-names: Baraka
+    given-names: Rebhi S.
+    affiliation: "Islamic University of Gaza, Gaza, Palestine"
 license: MIT
-version: "1.0.0"
-date-released: "2026-06-03"
-
-preferred-citation:
-  type: article
-  title: >
-    Using Machine Learning for the Prediction of Graduation in Big Data in Higher Education
-  authors:
-    - family-names: "Yaghi"
-      given-names: "Samer"
-      orcid: "https://orcid.org/0009-0001-0268-7163"
-  year: 2026
-  note: "Software implementation accompanying the research study"
+repository-code: "https://github.com/sameredu/UCAS-EDML-Graduation-Prediction"
+abstract: >-
+  Reference implementation for a study of target leakage in machine-learning
+  models that predict higher education graduation from administrative student
+  records. Includes the leakage diagnostic, the corrected leakage-free pipeline,
+  pre-enrolment prediction and a fairness audit by recorded sex.
+keywords:
+  - target leakage
+  - educational data mining
+  - graduation prediction
+  - algorithmic fairness
+  - reproducibility

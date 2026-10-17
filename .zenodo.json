@@ -1,29 +1,31 @@
 {
-  "title": "UCAS-EDML-Graduation-Prediction: Educational Data Mining and Machine Learning for Graduation Prediction",
-  "description": "A machine learning and educational data mining (EDML) framework developed at the University College of Applied Sciences (UCAS) to predict student graduation timelines and academic success based on historical and behavioral data.",
+  "title": "UCAS-EDML: Target Leakage in Machine Learning Models that Predict Higher Education Graduation from Administrative Records",
+  "description": "Reference implementation for a study of target leakage in machine-learning models that predict higher education graduation from administrative student records. Two attributes routinely held in student information systems — the recorded graduation year and the graduate grade average — are deterministic functions of the outcome; retaining them drives Decision Tree, Random Forest and Gradient Boosting to exactly 100% accuracy with zero cross-validation variance. The repository contains the leakage diagnostic, the corrected leakage-free pipeline (train/test split before scaling and augmentation), pre-enrolment prediction, and a fairness audit by recorded sex. Supersedes version 1.0.0, whose reported accuracy was an artefact of the leakage documented here. Data shipped with the repository is synthetic; the published results in results/ come from the full institutional dataset.",
   "creators": [
     {
       "name": "Yaghi, Samer",
-      "affiliation": "University College of Applied Sciences (UCAS)"
+      "affiliation": "University College of Applied Sciences (UCAS), Gaza, Palestine",
       "orcid": "0009-0001-0268-7163"
     },
     {
-    "name": "Baraka, Rebhi S.",
-    "affiliation": "Islamic University of Gaza, Palestine"
+      "name": "Baraka, Rebhi S.",
+      "affiliation": "Islamic University of Gaza, Palestine"
     }
   ],
   "license": "MIT",
   "upload_type": "software",
   "access_right": "open",
-    "keywords": [
+  "keywords": [
+    "target-leakage",
+    "data-leakage",
+    "reproducibility",
     "educational-data-mining",
-    "machine-learning",
+    "learning-analytics",
     "graduation-prediction",
-    "academic-analytics",
-    "ucas",
-    "predictive-modeling"
+    "algorithmic-fairness",
+    "machine-learning"
   ],
   "communities": [],
-  "version": "1.0.0",
+  "version": "2.0.0",
   "language": "eng"
 }
