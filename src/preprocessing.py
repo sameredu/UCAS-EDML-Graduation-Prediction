@@ -9,8 +9,9 @@ in the test partition. Here the order is:
 
     1. build the cohort
     2. split  (stratified 70/30)
-    3. fit the scaler on the TRAINING partition only
-    4. augment the TRAINING partition only
+    3. impute missing age with the TRAINING-partition median   (v2.1.0)
+    4. fit the scaler on the TRAINING partition only
+    5. augment the TRAINING partition only
 
 `split_scale_augment()` is the only function that produces model-ready arrays,
 and it enforces that order. There is no code path that augments before splitting.
@@ -74,19 +75,53 @@ def encode(df: pd.DataFrame) -> pd.DataFrame:
     out["MAJOR"] = out["DEPARTMENT_NAME"].map(C.IT_DEPARTMENTS)
     out["HS_BRANCH"] = out["STUDY_TYPE_NAME"].map(_branch)
     out["REGION"] = out["STD_ADDRESS"].map(C.REGIONS).fillna(C.REGION_UNKNOWN).astype(int)
-    out["AGE"] = out["AGE"].fillna(out["AGE"].median())
+    # Age is NOT imputed here. v2.0.0 filled it with the median of the whole
+    # cohort before the split; v2.1.0 imputes inside the pipeline from the
+    # training partition (or training fold) only. See split_scale_augment().
     out = out.rename(columns={"PERCENTAGE": "HS_SCORE"})
 
     # Audit-only. Never enters an attribute set; see config.AUDIT_ONLY.
-    out["SEX_C"] = out["SEX"].map({"M": 1, "F": 2}).fillna(1).astype(int)
+    # Missing or unrecognised values are coded 0 (unknown) and excluded from
+    # the subgroup audit. v2.0.0 assigned them to the male category.
+    out["SEX_C"] = (out["SEX"].astype(str).str.strip().str.upper()
+                    .map({"M": 1, "F": 2}).fillna(0).astype(int))
 
     # Leakage attributes, materialised only so that Configuration A can
     # demonstrate the artefact. GRAD_YEAR_F is 0 exactly when the student did
     # not graduate, which is why it reproduces the label perfectly.
     out["GRAD_YEAR_F"] = out["GRADUATE_YEAR"].fillna(0)
 
-    out[C.TARGET] = (out["STATUS"] == C.GRADUATED_CODE).astype(int)
+    # Keep the raw status code: C.TARGET is also called "STATUS" and is
+    # overwritten with the binary outcome on the next line.
+    out["STATUS_CODE"] = out["STATUS"].astype(str).str.strip()
+    out["STILL_ENROLLED"] = (out["STATUS_CODE"] == C.STILL_ENROLLED_CODE).astype(int)
+    out[C.TARGET] = (out["STATUS_CODE"] == C.GRADUATED_CODE).astype(int)
+    # Three outcomes at extraction: 0 left without graduating, 1 graduated,
+    # 2 still enrolled (right-censored).
+    out["STATUS3"] = np.where(out[C.TARGET] == 1, 1,
+                              np.where(out["STILL_ENROLLED"] == 1, 2, 0))
     return out
+
+
+def missing_counts(df: pd.DataFrame) -> dict:
+    """How many records each missing-value rule touches (Reviewer 1, point 5)."""
+    return {
+        "age_missing": int(df["AGE"].isna().sum()),
+        "sex_unknown": int((df["SEX_C"] == 0).sum()),
+        "region_unknown": int((df["REGION"] == C.REGION_UNKNOWN).sum()),
+        "hs_score_missing": int(df["HS_SCORE"].isna().sum()),
+    }
+
+
+def impute(X_tr: np.ndarray, X_te: np.ndarray, features: list[str]):
+    """Median imputation fitted on the training rows only."""
+    X_tr, X_te = X_tr.copy(), X_te.copy()
+    for j, f in enumerate(features):
+        if f in C.IMPUTE_MEDIAN or np.isnan(X_tr[:, j]).any() or np.isnan(X_te[:, j]).any():
+            med = np.nanmedian(X_tr[:, j])
+            X_tr[np.isnan(X_tr[:, j]), j] = med
+            X_te[np.isnan(X_te[:, j]), j] = med
+    return X_tr, X_te
 
 
 def prepare(path: str, verbose: bool = True) -> pd.DataFrame:
@@ -123,13 +158,17 @@ def augment(X: np.ndarray, y: np.ndarray, numeric_idx: list[int],
 
 # ------------------------------------------------------------- the pipeline --
 def split_scale_augment(df: pd.DataFrame, features: list[str],
-                        augment_factor: int = 1, seed: int = C.SEED):
+                        augment_factor: int = 1, seed: int = C.SEED,
+                        target: str = C.TARGET, split=None):
     """
     The leakage-free pipeline, in the only order this module permits.
 
     Returns (X_train, X_test, y_train, y_test, test_index).
     `test_index` indexes back into `df` so the fairness audit can partition the
     test set by an attribute the model never saw.
+
+    `split`, if given, is a (train_idx, test_idx) pair used instead of the
+    stratified random split (temporal validation).
     """
     for f in features:
         if f in C.AUDIT_ONLY:
@@ -138,20 +177,26 @@ def split_scale_augment(df: pd.DataFrame, features: list[str],
             )
 
     X = df[features].to_numpy(dtype=float)
-    y = df[C.TARGET].to_numpy()
+    y = df[target].to_numpy()
     idx = np.arange(len(df))
 
     # 1. SPLIT FIRST — before any transformation touches the data.
-    i_tr, i_te = train_test_split(
-        idx, test_size=C.TEST_SIZE, random_state=seed, stratify=y
-    )
+    if split is None:
+        i_tr, i_te = train_test_split(
+            idx, test_size=C.TEST_SIZE, random_state=seed, stratify=y
+        )
+    else:
+        i_tr, i_te = split
 
-    # 2. Fit the scaler on the training partition only.
-    scaler = MinMaxScaler().fit(X[i_tr])
-    X_tr, X_te = scaler.transform(X[i_tr]), scaler.transform(X[i_te])
+    # 2. Impute from the training partition only.
+    X_tr, X_te = impute(X[i_tr], X[i_te], features)
+
+    # 3. Fit the scaler on the training partition only.
+    scaler = MinMaxScaler().fit(X_tr)
+    X_tr, X_te = scaler.transform(X_tr), scaler.transform(X_te)
     y_tr, y_te = y[i_tr], y[i_te]
 
-    # 3. Augment the training partition only.
+    # 4. Augment the training partition only.
     numeric_idx = [i for i, f in enumerate(features) if f in C.NUMERIC]
     X_tr, y_tr = augment(X_tr, y_tr, numeric_idx, factor=augment_factor, seed=seed)
 

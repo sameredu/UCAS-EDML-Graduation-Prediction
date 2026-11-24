@@ -77,8 +77,10 @@ def fig2_leakage(runs: dict, out: str) -> None:
         for bar, v in zip(bars, values):
             ax.text(bar.get_x() + bar.get_width() / 2, v + 0.9,
                     f"{v:.1f}", ha="center", fontsize=7)
-    ax.set_xticks(x, [C.CONFIG_LABELS[c].replace(": ", ":\n") for c in ["A", "B", "C"]],
-                  fontsize=8.5)
+    labels = {"A": "A: with leakage\nattributes",
+              "B": "B: corrected\n(status at extraction)",
+              "C": "C: pre-enrolment\nonly"}
+    ax.set_xticks(x, [labels[c] for c in ["A", "B", "C"]], fontsize=8.5)
     ax.set_ylim(50, 118)
     ax.axhline(100, color="#c0392b", ls="--", lw=0.9)
     ax.text(2.44, 100.7, "perfect separation", color="#c0392b", fontsize=7.5, ha="right")
@@ -137,8 +139,10 @@ def fig5_tree(df, out: str) -> None:
     features = C.CONFIGURATIONS["B"]
     X = df[features].to_numpy(dtype=float)
     y = df[C.TARGET].to_numpy()
-    X_tr, _, y_tr, _ = train_test_split(
+    X_tr, X_te, y_tr, _ = train_test_split(
         X, y, test_size=C.TEST_SIZE, random_state=C.SEED, stratify=y)
+    from .preprocessing import impute
+    X_tr, _ = impute(X_tr, X_te, features)   # training-partition median
     tree = DecisionTreeClassifier(random_state=C.SEED,
                                   **C.HYPERPARAMETERS["Decision Tree"]).fit(X_tr, y_tr)
 
