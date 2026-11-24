@@ -10,14 +10,16 @@ Twenty years of institutional records from the University College of Applied Sci
 
 ## What this repository shows
 
-Two attributes held in almost every student information system are **deterministic functions of the graduation outcome**:
+Two attributes held in almost every student information system are **filled in as a consequence of graduating**:
 
 | Attribute | Why it leaks |
 |---|---|
-| `GRADUATE_YEAR` | Recorded only for students who graduated — null for every non-graduate |
-| `STD_GRADEAVG` | Equals `STD_AVG` for every non-graduate; differs only once a student graduates |
+| `GRADUATE_YEAR` | Recorded for all 1,826 graduates and none of the 2,878 others — determines the outcome exactly |
+| `STD_GRADEAVG` | Equals `STD_AVG` for every non-graduate **and** for 1,002 of 1,826 graduates (54.87%); a *differing* value occurs only among graduates — partly determined by the outcome |
 
-Keep them, and a depth-limited decision tree, a bagged ensemble and a boosted ensemble all reach **exactly 100% accuracy with a cross-validation standard deviation of zero**. Drop them, and the same three models land in the high eighties.
+A second, partial form of leakage (v2.1.0): the semester counts are counted up to the extraction date, so a graduate's count reflects a completed programme. Configuration B therefore **classifies status at extraction**; it is not a forecast. Configuration B-S removes the counts, and `run_all.py` reports sensitivity analyses for students still enrolled, complete-follow-up cohorts and later cohorts.
+
+Keep them, and a depth-limited decision tree, a bagged ensemble and a boosted ensemble all reach **exactly 100% accuracy with a cross-validation standard deviation of zero**. Drop them, and the same three models land in the high eighties: a classification of status at the extraction date (mid-2020), not a forecast. Remove the semester counts as well, and accuracy falls to about 80–82%.
 
 ```
 CONFIGURATION A: with leakage attributes
@@ -25,10 +27,15 @@ CONFIGURATION A: with leakage attributes
   Decision Tree    100.00   AUC 1.000   5-fold CV 100.00 +/- 0.00
   GBT Classifier   100.00   AUC 1.000   5-fold CV 100.00 +/- 0.00
 
-CONFIGURATION B: corrected (full record)
+CONFIGURATION B: corrected, status at extraction
   Random Forest     88.81   AUC 0.954   5-fold CV  88.67 +/- 0.58
   Decision Tree     87.18   AUC 0.933   5-fold CV  87.29 +/- 0.54
   GBT Classifier    89.16   AUC 0.955   5-fold CV  88.50 +/- 0.62
+
+CONFIGURATION B-S: B without semester counts
+  Random Forest     81.02   AUC 0.892   5-fold CV  81.76 +/- 1.12
+  Decision Tree     80.10   AUC 0.875   5-fold CV  81.16 +/- 0.41
+  GBT Classifier    81.66   AUC 0.898   5-fold CV  82.29 +/- 0.44
 
 CONFIGURATION C: pre-enrolment attributes only
   Random Forest     67.92   AUC 0.747   5-fold CV  68.30 +/- 1.30
@@ -58,7 +65,7 @@ Results from the earlier version should not be cited as independent corroboratio
 ```bash
 pip install -r requirements.txt
 
-python run_all.py --data data/sample_data.csv        # bundled 402-record sample
+python run_all.py --data data/sample_data.csv        # bundled 400-record synthetic sample
 python run_all.py --data /path/to/full_extract.xls   # full dataset
 
 python -m src.figures --data /path/to/full_extract.xls --out results/figures
@@ -77,7 +84,10 @@ enrolment year and major recover their exact GPA and graduation outcome, so the
 sample is generated instead — see `data/README.md` and `src/make_sample.py`.
 
 The synthetic sample preserves the structure this repository demonstrates: the
-outcome mix, and the two leakage relationships exactly. Run `run_all.py` on it
+outcome mix, `GRADUATE_YEAR` recorded if and only if the student graduated, and
+(from v2.1.0) a matching `STD_GRADEAVG` for every non-graduate and about 55% of
+graduates, as in the real data. The v2.0.0 sample gave every synthetic graduate a
+differing value, which the real data do not. Run `run_all.py` on it
 and Configuration A still reaches 100% across all three models, which is the
 claim you can verify for yourself without any real data.
 
@@ -88,10 +98,16 @@ full dataset and are committed to `results/`**: `results_full.json`,
 
 ---
 
+## Changes in v2.1.0
+
+Revised in response to peer review; see [`CHANGELOG.md`](CHANGELOG.md). The committed `results/` were produced by v2.1.0 on the full extract and contain aggregate results only.
+
+---
+
 ## Layout
 
 ```
-src/config.py          cohort filter, the three attribute configurations,
+src/config.py          cohort filter, the attribute configurations (A, B, B-S, C),
                        hyperparameters, seed — nothing derived from the outcome
 src/preprocessing.py   cohort construction; split -> scale -> augment, in that order
 src/models.py          the three classifiers
@@ -115,7 +131,7 @@ results/               the published outputs, from the full dataset
 
 **Audit only — never a model input.** Recorded sex. The source system stores a binary administrative field; it is not self-reported and does not represent gender identity. It is held out of every attribute set so that no prediction is conditioned on it, and used only to partition the test set for the subgroup audit. `split_scale_augment()` raises if it is passed as a feature.
 
-Withholding it costs nothing: Random Forest accuracy *rises* from 88.31% to 88.81%, Gradient Boosting falls from 89.38% to 89.16% — both well inside the confidence intervals. The subgroup disparity persists anyway (demographic parity difference ≈ −0.11), which locates it in the enrolment-history attributes rather than in the model.
+Withholding it costs nothing: Random Forest accuracy *rises* from 88.31% to 88.81%, Gradient Boosting falls from 89.38% to 89.16% — both well inside the confidence intervals. A subgroup difference remains anyway: the un-augmented models predict graduation for female students more often (demographic parity difference, male minus female, −0.109 to −0.128), in line with a higher female graduation rate. Because sex is withheld, the difference is carried by the other inputs, which may act as proxies for it; the audit is descriptive.
 
 ---
 
@@ -123,7 +139,7 @@ Withholding it costs nothing: Random Forest accuracy *rises* from 88.31% to 88.8
 
 **Augmentation hurts.** Gaussian-noise augmentation of the training set reduces accuracy for all three classifiers, by 0.71 to 1.91 points. It is reported as a negative control, not as a method. Replicating 3,292 records adds no information the originals do not already carry.
 
-**Persistence beats attainment.** The number of regular semesters completed is the dominant attribute in all three models (RF 0.339, DT 0.628, GBT 0.570), ahead of cumulative GPA (0.246, 0.152, 0.180). The earlier ranking put GPA first — an appearance produced by the leaked graduate-GPA attribute.
+**Semester counts dominate, partly for a mechanical reason.** The number of regular semesters completed is the dominant attribute in all three Configuration B models (RF 0.339, DT 0.628, GBT 0.570), ahead of cumulative GPA (0.246, 0.152, 0.180). At extraction the count largely reflects time in the programme and whether it was completed, so this ranking describes status at extraction and should not be read as persistence mattering more than attainment for future outcomes (v2.1.0; see Configuration B-S).
 
 ---
 

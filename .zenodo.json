@@ -1,6 +1,6 @@
 {
   "title": "UCAS-EDML: Target Leakage in Machine Learning Models that Predict Higher Education Graduation from Administrative Records",
-  "description": "Reference implementation for a study of target leakage in machine-learning models that predict higher education graduation from administrative student records. Two attributes routinely held in student information systems — the recorded graduation year and the graduate grade average — are deterministic functions of the outcome; retaining them drives Decision Tree, Random Forest and Gradient Boosting to exactly 100% accuracy with zero cross-validation variance. The repository contains the leakage diagnostic, the corrected leakage-free pipeline (train/test split before scaling and augmentation), pre-enrolment prediction, and a fairness audit by recorded sex. Supersedes version 1.0.0, whose reported accuracy was an artefact of the leakage documented here. Data shipped with the repository is synthetic; the published results in results/ come from the full institutional dataset.",
+  "description": "Reference implementation for a study of target leakage in machine-learning models that predict higher education graduation from administrative student records. Two attributes routinely held in student information systems — the recorded graduation year and the graduate grade average — are filled in as a consequence of graduating (graduation year determines the outcome exactly; graduate grade average differs from cumulative GPA only for graduates); retaining them drives Decision Tree, Random Forest and Gradient Boosting to exactly 100% accuracy with zero cross-validation variance. The repository contains the leakage diagnostic, the corrected leakage-free pipeline (train/test split before scaling and augmentation), pre-enrolment prediction, and a fairness audit by recorded sex. Version 2.1.0 responds to peer review: the fairness audit uses the un-augmented models, imputation is fitted on training data only, McNemar p-values are Holm-adjusted, and sensitivity analyses address extraction-time semester counts, students still enrolled and later cohorts. Supersedes versions 1.0.0 and 2.0.0; version 1.0.0, whose reported accuracy was an artefact of the leakage documented here. Data shipped with the repository is synthetic; the published results in results/ come from the full institutional dataset.",
   "creators": [
     {
       "name": "Yaghi, Samer",
@@ -26,6 +26,6 @@
     "machine-learning"
   ],
   "communities": [],
-  "version": "2.0.0",
+  "version": "2.1.0",
   "language": "eng"
 }

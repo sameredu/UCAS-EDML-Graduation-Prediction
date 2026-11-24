@@ -10,6 +10,7 @@ authors:
   - family-names: Baraka
     given-names: Rebhi S.
     affiliation: "Islamic University of Gaza, Gaza, Palestine"
+version: "2.1.0"
 license: MIT
 repository-code: "https://github.com/sameredu/UCAS-EDML-Graduation-Prediction"
 abstract: >-
