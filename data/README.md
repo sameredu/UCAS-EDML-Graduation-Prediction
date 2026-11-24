@@ -30,10 +30,16 @@ The structural properties the repository exists to demonstrate:
 
 - the outcome mix of the real cohort (39.0% graduated here, 38.82% in the cohort)
 - `GRADUATE_YEAR` populated **if and only if** the student graduated
-- `STD_GRADEAVG` equal to `STD_AVG` **if and only if** the student did not graduate
+- `STD_GRADEAVG` equal to `STD_AVG` for every non-graduate and for about 55% of
+  graduates, so a differing value occurs only among graduates. This matches the
+  real data (1,002 of 1,826 graduates match). **The v2.0.0 sample gave every
+  graduate a differing value; that was a departure from the real data.**
+- still-enrolled students concentrated in recent admission years
+- a few missing ages and unrecorded sex values, to exercise the imputation and
+  exclusion rules
 - more semesters completed and higher averages among graduates
 
-Running `run_all.py` on it reproduces the leakage diagnostic exactly — all three
+Running `run_all.py` on it reproduces the `GRADUATE_YEAR` diagnostic exactly — all three
 classifiers reach 100% under Configuration A, and the check
 `reproduces the label exactly` returns `True`. That is the point the sample is
 there to let you verify yourself.
