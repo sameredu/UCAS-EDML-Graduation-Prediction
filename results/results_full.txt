@@ -1,10 +1,43 @@
+Cohort construction
+  full extract                               65,532
+  IT specialisations                          5,744
+  with at least one semester                  4,823
+  with a recorded cumulative average          4,704
+
 ======================================================================================
-COHORT
+COHORT, MISSING VALUES AND FOLLOW-UP   (Section 3.1)
 ======================================================================================
   analytical cohort                         4,704
   train / test                              3,292 / 1,412
   graduated                                 1,826   (38.82%)
-  recorded sex (audit only)              73.53% male / 26.47% female
+  still enrolled at extraction              1,027
+  recorded sex (known values)            73.53% male / 26.47% female
+  age missing (imputed, training median)      139
+  sex missing/unrecognised (excluded)           0
+  region unknown (coded 6)                    523
+
+  extraction date: mid-2020; year used for follow-up: 2020
+  admitted             n  years   grad %  enrolled %   left %
+  2000 or earlier    432     20     63.7         1.2     35.2
+  2001               299     19     53.5         0.7     45.8
+  2002               215     18     43.3         0.0     56.7
+  2003               212     17     49.5         0.0     50.5
+  2004               236     16     47.5         1.3     51.3
+  2005               234     15     46.6         0.9     52.6
+  2006               238     14     41.2         2.5     56.3
+  2007               297     13     51.2         1.7     47.1
+  2008               219     12     58.0         0.5     41.6
+  2009               249     11     51.0         3.2     45.8
+  2010               202     10     47.5         6.9     45.5
+  2011               196      9     42.9         6.1     51.0
+  2012               147      8     40.8        19.7     39.5
+  2013               133      7     41.4        15.8     42.9
+  2014               178      6     28.1        24.7     47.2
+  2015               142      5     31.0        37.3     31.7
+  2016               272      4     21.3        44.1     34.6
+  2017               213      3      9.9        72.3     17.8
+  2018               325      2      0.0        88.9     11.1
+  2019               265      1      0.0        97.7      2.3
 
 ======================================================================================
 LEAKAGE DIAGNOSTIC   (Section 5.2)
@@ -12,43 +45,91 @@ LEAKAGE DIAGNOSTIC   (Section 5.2)
   graduation year recorded, graduates          1,826 / 1,826
   graduation year recorded, non-graduates          0 / 2,878
   reproduces the label exactly                  True
-  graduate GPA equals cumulative GPA          100.0% of non-graduates
+  graduate GPA = cumulative GPA, non-grads     2,878 / 2,878
+  graduate GPA = cumulative GPA, graduates     1,002 / 1,826   (54.87%)
+  tolerance: numpy.isclose rtol=1e-05, atol=1e-08
+
+======================================================================================
+NINE-ALGORITHM SCREENING   (Section 3.4; training partition only, 5-fold CV)
+======================================================================================
+  records: 3,292 (training only)
+  KNN                     80.26 +/- 2.06   AUC 0.881
+  SVM                     83.20 +/- 1.49   AUC 0.905
+  Neural Network          85.88 +/- 1.09   AUC 0.931
+  Naive Bayes             82.02 +/- 1.74   AUC 0.904
+  Logistic Regression     80.59 +/- 1.95   AUC 0.889
+  AdaBoost                87.39 +/- 0.98   AUC 0.944
+  Decision Tree           86.94 +/- 0.90   AUC 0.932
+  Random Forest           87.82 +/- 1.32   AUC 0.947
+  GBT Classifier          88.09 +/- 1.14   AUC 0.950
 
 ======================================================================================
 CONFIGURATION A: with leakage attributes
 ======================================================================================
-  model              CA %            95% CI    AUC     F1  Recall    FN   aug x4         5-fold CV
-  Random Forest    100.00     [99.7, 100.0]  1.000  1.000   1.000     0   100.00   100.00 +/- 0.00
-  Decision Tree    100.00     [99.7, 100.0]  1.000  1.000   1.000     0   100.00   100.00 +/- 0.00
-  GBT Classifier   100.00     [99.7, 100.0]  1.000  1.000   1.000     0   100.00   100.00 +/- 0.00
-  McNemar:
+  model              CA %          95% CI    AUC     F1  Recall   aug x4          5-fold CV (folds; mean +/- SD)
+  Random Forest    100.00   [99.7, 100.0]  1.000  1.000   1.000   100.00   100.00 100.00 100.00 100.00 100.00; 100.00 +/- 0.00
+  Decision Tree    100.00   [99.7, 100.0]  1.000  1.000   1.000   100.00   100.00 100.00 100.00 100.00 100.00; 100.00 +/- 0.00
+  GBT Classifier   100.00   [99.7, 100.0]  1.000  1.000   1.000   100.00   100.00 100.00 100.00 100.00 100.00; 100.00 +/- 0.00
+  majority-class baseline: 61.19%
+  advising view (alert = predicted not to graduate):
+    Random Forest    alerts   864   missed (non-graduates, no alert)    0 of 864   unneeded (graduates alerted)    0 of 548   train acc 100.00
+    Decision Tree    alerts   864   missed (non-graduates, no alert)    0 of 864   unneeded (graduates alerted)    0 of 548   train acc 100.00
+    GBT Classifier   alerts   864   missed (non-graduates, no alert)    0 of 864   unneeded (graduates alerted)    0 of 548   train acc 100.00
+  McNemar (continuity-corrected; Holm-adjusted across the three pairs):
     Random Forest vs Decision Tree       undefined: no discordant predictions
     Random Forest vs GBT Classifier      undefined: no discordant predictions
     Decision Tree vs GBT Classifier      undefined: no discordant predictions
 
 ======================================================================================
-CONFIGURATION B: corrected (full record)
+CONFIGURATION B: corrected, status at extraction
 ======================================================================================
-  model              CA %            95% CI    AUC     F1  Recall    FN   aug x4         5-fold CV
-  Random Forest     88.81      [87.1, 90.4]  0.954  0.859   0.880    66    86.90    88.67 +/- 0.58
-  Decision Tree     87.18      [85.3, 88.8]  0.933  0.845   0.898    56    86.47    87.29 +/- 0.54
-  GBT Classifier    89.16      [87.4, 90.7]  0.955  0.862   0.874    69    87.75    88.50 +/- 0.62
-  McNemar:
-    Random Forest vs Decision Tree       chi2 =   4.889   p = 0.0270    significant
-    Random Forest vs GBT Classifier      chi2 =   0.246   p = 0.6198    not significant
-    Decision Tree vs GBT Classifier      chi2 =   7.290   p = 0.0069    significant
+  model              CA %          95% CI    AUC     F1  Recall   aug x4          5-fold CV (folds; mean +/- SD)
+  Random Forest     88.81    [87.1, 90.4]  0.954  0.859   0.880    86.90   89.16 89.05 87.78 88.95 88.40; 88.67 +/- 0.58
+  Decision Tree     87.18    [85.3, 88.8]  0.933  0.845   0.898    86.47   87.78 87.78 86.50 87.35 87.02; 87.29 +/- 0.54
+  GBT Classifier    89.16    [87.4, 90.7]  0.955  0.862   0.874    87.75   89.16 87.89 87.99 88.31 89.15; 88.50 +/- 0.62
+  majority-class baseline: 61.19%
+  advising view (alert = predicted not to graduate):
+    Random Forest    alerts   838   missed (non-graduates, no alert)   92 of 864   unneeded (graduates alerted)   66 of 548   train acc 96.81
+    Decision Tree    alerts   795   missed (non-graduates, no alert)  125 of 864   unneeded (graduates alerted)   56 of 548   train acc 89.61
+    GBT Classifier   alerts   849   missed (non-graduates, no alert)   84 of 864   unneeded (graduates alerted)   69 of 548   train acc 90.70
+  McNemar (continuity-corrected; Holm-adjusted across the three pairs):
+    Random Forest vs Decision Tree       chi2 =   4.889   p = 0.0270    p_Holm = 0.0541    not significant
+    Random Forest vs GBT Classifier      chi2 =   0.246   p = 0.6198    p_Holm = 0.6198    not significant
+    Decision Tree vs GBT Classifier      chi2 =   7.290   p = 0.0069    p_Holm = 0.0208    significant
+
+======================================================================================
+CONFIGURATION B-S: B without semester counts
+======================================================================================
+  model              CA %          95% CI    AUC     F1  Recall   aug x4          5-fold CV (folds; mean +/- SD)
+  Random Forest     81.02    [78.9, 83.0]  0.892  0.760   0.776    78.05   81.62 82.68 80.98 83.10 80.43; 81.76 +/- 1.12
+  Decision Tree     80.10    [77.9, 82.1]  0.875  0.748   0.761    77.41   81.40 80.98 81.51 81.40 80.53; 81.16 +/- 0.41
+  GBT Classifier    81.66    [79.6, 83.6]  0.898  0.768   0.781    81.30   82.15 83.00 82.36 82.15 81.81; 82.29 +/- 0.44
+  majority-class baseline: 61.19%
+  advising view (alert = predicted not to graduate):
+    Random Forest    alerts   842   missed (non-graduates, no alert)  145 of 864   unneeded (graduates alerted)  123 of 548   train acc 95.57
+    Decision Tree    alerts   845   missed (non-graduates, no alert)  150 of 864   unneeded (graduates alerted)  131 of 548   train acc 84.39
+    GBT Classifier   alerts   845   missed (non-graduates, no alert)  139 of 864   unneeded (graduates alerted)  120 of 548   train acc 85.54
+  McNemar (continuity-corrected; Holm-adjusted across the three pairs):
+    Random Forest vs Decision Tree       chi2 =   1.021   p = 0.3122    p_Holm = 0.6244    not significant
+    Random Forest vs GBT Classifier      chi2 =   0.771   p = 0.3799    p_Holm = 0.6244    not significant
+    Decision Tree vs GBT Classifier      chi2 =   3.615   p = 0.0573    p_Holm = 0.1718    not significant
 
 ======================================================================================
 CONFIGURATION C: pre-enrolment only
 ======================================================================================
-  model              CA %            95% CI    AUC     F1  Recall    FN   aug x4         5-fold CV
-  Random Forest     67.92      [65.4, 70.3]  0.747  0.559   0.524   261    67.78    68.30 +/- 1.30
-  Decision Tree     67.28      [64.8, 69.7]  0.738  0.534   0.484   283    66.50    68.13 +/- 0.77
-  GBT Classifier    70.47      [68.0, 72.8]  0.769  0.599   0.568   237    67.28    70.39 +/- 0.66
-  McNemar:
-    Random Forest vs Decision Tree       chi2 =   0.214   p = 0.6436    not significant
-    Random Forest vs GBT Classifier      chi2 =   4.823   p = 0.0281    significant
-    Decision Tree vs GBT Classifier      chi2 =  10.579   p = 0.0011    significant
+  model              CA %          95% CI    AUC     F1  Recall   aug x4          5-fold CV (folds; mean +/- SD)
+  Random Forest     67.92    [65.4, 70.3]  0.747  0.559   0.524    67.78   67.69 68.54 66.84 70.35 68.09; 68.30 +/- 1.30
+  Decision Tree     67.28    [64.8, 69.7]  0.738  0.534   0.484    66.50   69.08 68.01 67.27 68.76 67.55; 68.13 +/- 0.77
+  GBT Classifier    70.47    [68.0, 72.8]  0.769  0.599   0.568    67.28   71.20 69.71 69.93 70.14 70.96; 70.39 +/- 0.66
+  majority-class baseline: 61.19%
+  advising view (alert = predicted not to graduate):
+    Random Forest    alerts   933   missed (non-graduates, no alert)  192 of 864   unneeded (graduates alerted)  261 of 548   train acc 89.58
+    Decision Tree    alerts   968   missed (non-graduates, no alert)  179 of 864   unneeded (graduates alerted)  283 of 548   train acc 71.20
+    GBT Classifier   alerts   921   missed (non-graduates, no alert)  180 of 864   unneeded (graduates alerted)  237 of 548   train acc 73.66
+  McNemar (continuity-corrected; Holm-adjusted across the three pairs):
+    Random Forest vs Decision Tree       chi2 =   0.214   p = 0.6436    p_Holm = 0.6436    not significant
+    Random Forest vs GBT Classifier      chi2 =   4.823   p = 0.0281    p_Holm = 0.0562    not significant
+    Decision Tree vs GBT Classifier      chi2 =  10.579   p = 0.0011    p_Holm = 0.0034    significant
 
 ======================================================================================
 FEATURE IMPORTANCE   (Configuration B)
@@ -63,38 +144,117 @@ FEATURE IMPORTANCE   (Configuration B)
   IT major                              0.020            0.000            0.003
   High-school branch                    0.018            0.000            0.000
 
-  decision tree: 79 nodes, 40 leaves
+  decision tree (single CART tree): depth 6, 79 nodes, 40 leaves; train 89.61% vs test 87.18%
 
 ======================================================================================
 CORRELATION WITH GRADUATION   (Table 2)
 ======================================================================================
-  Graduation year (leakage) r = +1.0000   p = < 0.001     <- excluded (leakage)
-  Regular semesters         r = +0.5461   p = < 0.001  
-  Graduate GPA (leakage)    r = +0.4838   p = < 0.001     <- excluded (leakage)
-  Summer semesters          r = +0.4716   p = < 0.001  
-  Cumulative GPA            r = +0.4497   p = < 0.001  
-  High-school branch        r = +0.1697   p = < 0.001  
-  Region of residence       r = -0.0810   p = < 0.001  
-  Recorded sex              r = +0.0689   p = < 0.001     <- audit only
-  Age at enrolment          r = +0.0324   p = 0.0262   
-  High-school score         r = +0.0230   p = 0.1151   
-  IT major                  r = +0.0081   p = 0.5797   
+  Graduation year (leakage) r = +1.0000   p = < 0.001   n = 4704     <- excluded (leakage)
+  Regular semesters         r = +0.5461   p = < 0.001   n = 4704  
+  Graduate GPA (leakage)    r = +0.4838   p = < 0.001   n = 4704     <- excluded (leakage)
+  Summer semesters          r = +0.4716   p = < 0.001   n = 4704  
+  Cumulative GPA            r = +0.4497   p = < 0.001   n = 4704  
+  High-school branch        r = +0.1697   p = < 0.001   n = 4704  
+  Region of residence       r = -0.0810   p = < 0.001   n = 4704  
+  Recorded sex              r = +0.0689   p = < 0.001   n = 4704     <- audit only
+  Age at enrolment          r = +0.0320   p = 0.0307    n = 4565  
+  High-school score         r = +0.0230   p = 0.1151    n = 4704  
+  IT major                  r = +0.0081   p = 0.5797    n = 4704  
 
 ======================================================================================
-FAIRNESS AUDIT BY RECORDED SEX   (Section 5.9)
+FAIRNESS AUDIT BY RECORDED SEX   (Section 5.9, Table 7)
 ======================================================================================
-  recorded sex is NOT an input to any model; it partitions the test set only
+  un-augmented Configuration B models (same predictions as Fig. 4);
+  recorded sex is NOT an input; selection rate = share predicted to graduate
+  pooled correct (check against Fig. 4): {'Random Forest': 1254, 'Decision Tree': 1231, 'GBT Classifier': 1259}
 
-  model           group         n   acc %     TPR     FNR     FPR   select    base
-  Random Forest   male       1041   87.22   0.864   0.136   0.123    0.394   0.366
-                  female      371   85.98   0.904   0.096   0.176    0.504   0.450
-                  M - F                    -0.041                   -0.110  -0.084
-  Decision Tree   male       1041   86.36   0.869   0.131   0.139    0.406   0.366
-                  female      371   86.79   0.922   0.078   0.176    0.512   0.450
-                  M - F                    -0.053                   -0.106  -0.084
-  GBT Classifier  male       1041   87.42   0.885   0.115   0.132    0.407   0.366
-                  female      371   88.68   0.952   0.048   0.167    0.520   0.450
-                  M - F                    -0.068                   -0.113  -0.084
+  model           group        n  corr  inc   acc %    TPR    FNR    FPR  select   base  missed
+  Random Forest   male      1041   921  120   88.47  0.853  0.147  0.097   0.374  0.366  64/660 
+                  female     371   333   38   89.76  0.940  0.060  0.137   0.499  0.450  28/204 
+                  M - F   selection -0.125 [-0.183, -0.066]   TPR -0.087 [-0.135, -0.030]   FPR -0.040 [-0.098, +0.007]
+                          accuracy -0.013 [-0.047, +0.027]   base rate -0.084 [-0.143, -0.026]   unknown sex excluded: 0
+  Decision Tree   male      1041   897  144   86.17  0.869  0.131  0.142   0.408  0.366  94/660 
+                  female     371   334   37   90.03  0.964  0.036  0.152   0.518  0.450  31/204 
+                  M - F   selection -0.109 [-0.168, -0.050]   TPR -0.095 [-0.138, -0.045]   FPR -0.010 [-0.070, +0.042]
+                          accuracy -0.039 [-0.073, +0.001]   base rate -0.084 [-0.143, -0.026]   unknown sex excluded: 0
+  GBT Classifier  male      1041   922  119   88.57  0.843  0.157  0.089   0.365  0.366  59/660 
+                  female     371   337   34   90.84  0.946  0.054  0.123   0.493  0.450  25/204 
+                  M - F   selection -0.128 [-0.186, -0.070]   TPR -0.104 [-0.151, -0.047]   FPR -0.033 [-0.089, +0.012]
+                          accuracy -0.023 [-0.055, +0.015]   base rate -0.084 [-0.143, -0.026]   unknown sex excluded: 0
 
-Full results written to /dev/null
+======================================================================================
+SENSITIVITY ANALYSES   (Section 5.11, Table 9)
+======================================================================================
+
+  (i) still-enrolled students excluded (n = 3,677)
+    B: corrected, status at extraction  (train 2,573 / test 1,104)
+    Random Forest     90.76    [88.9, 92.3]  0.956  0.911   0.958   baseline 50.36
+    Decision Tree     90.40    [88.5, 92.0]  0.939  0.910   0.973   baseline 50.36
+    GBT Classifier    91.03    [89.2, 92.6]  0.957  0.914   0.965   baseline 50.36
+    B-S: B without semester counts  (train 2,573 / test 1,104)
+    Random Forest     84.87    [82.6, 86.9]  0.901  0.860   0.940   baseline 50.36
+    Decision Tree     83.70    [81.4, 85.8]  0.889  0.851   0.940   baseline 50.36
+    GBT Classifier    84.87    [82.6, 86.9]  0.904  0.859   0.931   baseline 50.36
+    C: pre-enrolment only  (train 2,573 / test 1,104)
+    Random Forest     64.49    [61.6, 67.3]  0.697  0.637   0.628   baseline 50.36
+    Decision Tree     62.05    [59.1, 64.9]  0.663  0.622   0.630   baseline 50.36
+    GBT Classifier    64.95    [62.1, 67.7]  0.709  0.649   0.653   baseline 50.36
+
+  (ii) three outcomes: left / graduated / still enrolled
+    B: corrected, status at extraction  (train 3,292 / test 1,412)
+      Random Forest     83.43 [81.4, 85.3]  macro-F1 0.824  recall left/grad/enrolled 0.815/0.911/0.734  baseline 39.38
+      Decision Tree     82.37 [80.3, 84.3]  macro-F1 0.810  recall left/grad/enrolled 0.806/0.920/0.685  baseline 39.38
+      GBT Classifier    83.78 [81.8, 85.6]  macro-F1 0.828  recall left/grad/enrolled 0.804/0.911/0.769  baseline 39.38
+    C: pre-enrolment only  (train 3,292 / test 1,412)
+      Random Forest     62.46 [59.9, 65.0]  macro-F1 0.643  recall left/grad/enrolled 0.576/0.597/0.763  baseline 39.38
+      Decision Tree     62.46 [59.9, 65.0]  macro-F1 0.642  recall left/grad/enrolled 0.529/0.637/0.776  baseline 39.38
+      GBT Classifier    63.31 [60.8, 65.8]  macro-F1 0.650  recall left/grad/enrolled 0.565/0.626/0.769  baseline 39.38
+
+  (iii) complete follow-up: admitted up to 2014 (n = 3,487; still enrolled in subset 152)
+    B: corrected, status at extraction  (train 2,440 / test 1,047)
+    Random Forest     87.20    [85.0, 89.1]  0.938  0.878   0.941   baseline 51.19
+    Decision Tree     85.29    [83.0, 87.3]  0.912  0.860   0.926   baseline 51.19
+    GBT Classifier    86.53    [84.3, 88.5]  0.937  0.871   0.932   baseline 51.19
+    B-S: B without semester counts  (train 2,440 / test 1,047)
+    Random Forest     80.23    [77.7, 82.5]  0.871  0.813   0.883   baseline 51.19
+    Decision Tree     79.37    [76.8, 81.7]  0.853  0.813   0.922   baseline 51.19
+    GBT Classifier    79.66    [77.1, 82.0]  0.874  0.808   0.879   baseline 51.19
+    C: pre-enrolment only  (train 2,440 / test 1,047)
+    Random Forest     62.18    [59.2, 65.1]  0.690  0.605   0.593   baseline 51.19
+    Decision Tree     61.80    [58.8, 64.7]  0.670  0.619   0.636   baseline 51.19
+    GBT Classifier    66.19    [63.3, 69.0]  0.713  0.656   0.661   baseline 51.19
+
+  (iv) temporal validation within complete-follow-up cohorts: train <= 2008, test 2009-2014
+    B: corrected, status at extraction  (train 2,382 / test 1,105)
+    Random Forest     81.99    [79.6, 84.1]  0.891  0.820   0.960   baseline 57.29
+    Decision Tree     81.09    [78.7, 83.3]  0.882  0.815   0.972   baseline 57.29
+    GBT Classifier    81.72    [79.3, 83.9]  0.899  0.814   0.934   baseline 57.29
+    B-S: B without semester counts  (train 2,382 / test 1,105)
+    Random Forest     76.38    [73.8, 78.8]  0.838  0.766   0.905   baseline 57.29
+    Decision Tree     75.57    [72.9, 78.0]  0.828  0.762   0.915   baseline 57.29
+    GBT Classifier    77.01    [74.4, 79.4]  0.853  0.759   0.845   baseline 57.29
+    C: pre-enrolment only  (train 2,382 / test 1,105)
+    Random Forest     58.37    [55.4, 61.2]  0.620  0.547   0.589   baseline 57.29
+    Decision Tree     56.56    [53.6, 59.5]  0.614  0.572   0.680   baseline 57.29
+    GBT Classifier    60.63    [57.7, 63.5]  0.643  0.474   0.415   baseline 57.29
+
+  (v) temporal validation, all cohorts: train <= 2012, test 2013-2019 (later test cohorts are heavily censored)
+    B: corrected, status at extraction  (train 3,176 / test 1,528)
+    Random Forest     76.90    [74.7, 78.9]  0.889  0.550   0.947   baseline 85.08
+    Decision Tree     73.36    [71.1, 75.5]  0.867  0.522   0.974   baseline 85.08
+    GBT Classifier    76.77    [74.6, 78.8]  0.897  0.549   0.947   baseline 85.08
+    C: pre-enrolment only  (train 3,176 / test 1,528)
+    Random Forest     53.47    [51.0, 56.0]  0.490  0.228   0.461   baseline 85.08
+    Decision Tree     44.31    [41.8, 46.8]  0.491  0.230   0.557   baseline 85.08
+    GBT Classifier    80.30    [78.2, 82.2]  0.589  0.210   0.175   baseline 85.08
+
+  (vi) discrete-time hazard of graduation, admission attributes only
+      train students 3,292, person-periods 11,844, events 1,278; test C-index 0.629 (n = 1,412)
+      Age at enrolment         OR per SD 0.963  [0.906, 1.023]
+      High-school branch       OR per SD 1.219  [1.143, 1.300]
+      IT major                 OR per SD 1.020  [0.953, 1.092]
+      Region of residence      OR per SD 0.939  [0.876, 1.007]
+      High-school score        OR per SD 1.186  [1.112, 1.265]
+
+Full results written to results/results_full.json
 

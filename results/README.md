@@ -1,5 +1,10 @@
 # Published results
 
+> **v2.1.0.** The files below were produced by release 2.1.0 on the full
+> institutional extract (mid-2020). They contain aggregate results only; no
+> student-level record is published. Table 7 differs from v2.0.0 because v2.0.0
+> audited the augmented models.
+
 Everything in this directory was produced from the **full dataset** (4,704
 students), not from the synthetic sample in `data/`. These are the numbers and
 figures that appear in the paper.

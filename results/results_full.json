@@ -1,8 +1,162 @@
 {
   "cohort_size": 4704,
+  "version": "2.1.0",
+  "missing": {
+    "age_missing": 139,
+    "sex_unknown": 0,
+    "region_unknown": 523,
+    "hs_score_missing": 0
+  },
+  "followup": {
+    "extraction_date": "mid-2020",
+    "extraction_year_used": 2020,
+    "by_admission_year": {
+      "2000 or earlier": {
+        "n": 432,
+        "years_to_extraction": 20,
+        "graduated_pct": 63.657407407407405,
+        "still_enrolled_pct": 1.1574074074074074,
+        "left_pct": 35.18518518518518
+      },
+      "2001": {
+        "n": 299,
+        "years_to_extraction": 19,
+        "graduated_pct": 53.51170568561873,
+        "still_enrolled_pct": 0.6688963210702341,
+        "left_pct": 45.819397993311036
+      },
+      "2002": {
+        "n": 215,
+        "years_to_extraction": 18,
+        "graduated_pct": 43.25581395348837,
+        "still_enrolled_pct": 0.0,
+        "left_pct": 56.74418604651162
+      },
+      "2003": {
+        "n": 212,
+        "years_to_extraction": 17,
+        "graduated_pct": 49.528301886792455,
+        "still_enrolled_pct": 0.0,
+        "left_pct": 50.47169811320755
+      },
+      "2004": {
+        "n": 236,
+        "years_to_extraction": 16,
+        "graduated_pct": 47.45762711864407,
+        "still_enrolled_pct": 1.2711864406779663,
+        "left_pct": 51.271186440677965
+      },
+      "2005": {
+        "n": 234,
+        "years_to_extraction": 15,
+        "graduated_pct": 46.58119658119658,
+        "still_enrolled_pct": 0.8547008547008548,
+        "left_pct": 52.56410256410257
+      },
+      "2006": {
+        "n": 238,
+        "years_to_extraction": 14,
+        "graduated_pct": 41.17647058823529,
+        "still_enrolled_pct": 2.5210084033613445,
+        "left_pct": 56.30252100840336
+      },
+      "2007": {
+        "n": 297,
+        "years_to_extraction": 13,
+        "graduated_pct": 51.178451178451176,
+        "still_enrolled_pct": 1.6835016835016834,
+        "left_pct": 47.13804713804714
+      },
+      "2008": {
+        "n": 219,
+        "years_to_extraction": 12,
+        "graduated_pct": 57.99086757990868,
+        "still_enrolled_pct": 0.45662100456621,
+        "left_pct": 41.55251141552511
+      },
+      "2009": {
+        "n": 249,
+        "years_to_extraction": 11,
+        "graduated_pct": 51.00401606425703,
+        "still_enrolled_pct": 3.2128514056224895,
+        "left_pct": 45.78313253012048
+      },
+      "2010": {
+        "n": 202,
+        "years_to_extraction": 10,
+        "graduated_pct": 47.524752475247524,
+        "still_enrolled_pct": 6.9306930693069315,
+        "left_pct": 45.54455445544555
+      },
+      "2011": {
+        "n": 196,
+        "years_to_extraction": 9,
+        "graduated_pct": 42.857142857142854,
+        "still_enrolled_pct": 6.122448979591836,
+        "left_pct": 51.02040816326531
+      },
+      "2012": {
+        "n": 147,
+        "years_to_extraction": 8,
+        "graduated_pct": 40.816326530612244,
+        "still_enrolled_pct": 19.727891156462583,
+        "left_pct": 39.455782312925166
+      },
+      "2013": {
+        "n": 133,
+        "years_to_extraction": 7,
+        "graduated_pct": 41.35338345864661,
+        "still_enrolled_pct": 15.789473684210526,
+        "left_pct": 42.857142857142854
+      },
+      "2014": {
+        "n": 178,
+        "years_to_extraction": 6,
+        "graduated_pct": 28.08988764044944,
+        "still_enrolled_pct": 24.719101123595504,
+        "left_pct": 47.19101123595505
+      },
+      "2015": {
+        "n": 142,
+        "years_to_extraction": 5,
+        "graduated_pct": 30.985915492957744,
+        "still_enrolled_pct": 37.32394366197183,
+        "left_pct": 31.690140845070424
+      },
+      "2016": {
+        "n": 272,
+        "years_to_extraction": 4,
+        "graduated_pct": 21.323529411764707,
+        "still_enrolled_pct": 44.11764705882353,
+        "left_pct": 34.55882352941176
+      },
+      "2017": {
+        "n": 213,
+        "years_to_extraction": 3,
+        "graduated_pct": 9.859154929577464,
+        "still_enrolled_pct": 72.30046948356808,
+        "left_pct": 17.84037558685446
+      },
+      "2018": {
+        "n": 325,
+        "years_to_extraction": 2,
+        "graduated_pct": 0.0,
+        "still_enrolled_pct": 88.92307692307693,
+        "left_pct": 11.076923076923077
+      },
+      "2019": {
+        "n": 265,
+        "years_to_extraction": 1,
+        "graduated_pct": 0.0,
+        "still_enrolled_pct": 97.73584905660377,
+        "left_pct": 2.2641509433962264
+      }
+    }
+  },
   "descriptives": {
     "graduated": 1826,
     "graduation_rate": 38.81802721088435,
+    "still_enrolled": 1027,
     "male_pct": 73.53316326530613,
     "female_pct": 26.466836734693878,
     "grad_rate_by_branch": {
@@ -26,52 +180,120 @@
     "graduate_year_present_among_non_graduates": 0,
     "graduate_year_matches_label": true,
     "gradeavg_equals_avg_among_non_graduates": 1.0,
-    "gradeavg_equals_avg_among_graduates": 0.5487404162102957
+    "gradeavg_equals_avg_among_graduates": 0.5487404162102957,
+    "n_graduates_matching": 1002,
+    "n_graduates_differing": 824,
+    "n_non_graduates_matching": 2878,
+    "n_non_graduates_differing": 0,
+    "tolerance": {
+      "rtol": 1e-05,
+      "atol": 1e-08
+    }
   },
   "correlations": {
     "AGE": {
-      "r": 0.03241193884569135,
-      "p": 0.026216531082705097
+      "r": 0.03198278208868947,
+      "p": 0.030705325925031515,
+      "n": 4565
     },
     "HS_BRANCH": {
       "r": 0.16965922788484683,
-      "p": 1.028923383138042e-31
+      "p": 1.028923383138042e-31,
+      "n": 4704
     },
     "MAJOR": {
       "r": 0.008077646790570448,
-      "p": 0.5796657904726285
+      "p": 0.5796657904726285,
+      "n": 4704
     },
     "REGION": {
       "r": -0.0810063581533305,
-      "p": 2.643456284381679e-08
+      "p": 2.643456284381679e-08,
+      "n": 4704
     },
     "HS_SCORE": {
       "r": 0.022974841761893686,
-      "p": 0.11513299076096385
+      "p": 0.11513299076096385,
+      "n": 4704
     },
     "NORMAL_SMTR_COUNT": {
       "r": 0.5460802472661963,
-      "p": 0.0
+      "p": 0.0,
+      "n": 4704
     },
     "SIFI_SMTR_COUNT": {
       "r": 0.47157093626435376,
-      "p": 3.8657525405335655e-259
+      "p": 3.8657525405335655e-259,
+      "n": 4704
     },
     "STD_AVG": {
       "r": 0.4496876362480312,
-      "p": 5.509244169616505e-233
+      "p": 5.509244169616505e-233,
+      "n": 4704
     },
     "SEX_C": {
       "r": 0.0689352417279839,
-      "p": 2.2193947255567955e-06
+      "p": 2.2193947255567955e-06,
+      "n": 4704
     },
     "STD_GRADEAVG": {
       "r": 0.4838225340720165,
-      "p": 1.2311955423871924e-274
+      "p": 1.2311955423871924e-274,
+      "n": 4704
     },
     "GRAD_YEAR_F": {
       "r": 0.9999953118232713,
-      "p": 0.0
+      "p": 0.0,
+      "n": 4704
+    }
+  },
+  "screening": {
+    "n_records": 3292,
+    "partition": "training only",
+    "KNN": {
+      "accuracy_mean": 80.2554298444267,
+      "accuracy_sd": 2.0632327292296346,
+      "auc_mean": 0.8805463063595684
+    },
+    "SVM": {
+      "accuracy_mean": 83.20131358648777,
+      "accuracy_sd": 1.4872659052587975,
+      "auc_mean": 0.9048646724277095
+    },
+    "Neural Network": {
+      "accuracy_mean": 85.87507091429863,
+      "accuracy_sd": 1.0856900367933817,
+      "auc_mean": 0.931060306703419
+    },
+    "Naive Bayes": {
+      "accuracy_mean": 82.01673346832033,
+      "accuracy_sd": 1.7358071212700454,
+      "auc_mean": 0.9036160619459628
+    },
+    "Logistic Regression": {
+      "accuracy_mean": 80.58922287153327,
+      "accuracy_sd": 1.9543744050732934,
+      "auc_mean": 0.8885129019027799
+    },
+    "AdaBoost": {
+      "accuracy_mean": 87.39408978326745,
+      "accuracy_sd": 0.9837932114704206,
+      "auc_mean": 0.9441714383558597
+    },
+    "Decision Tree": {
+      "accuracy_mean": 86.93816273159574,
+      "accuracy_sd": 0.9024368762869821,
+      "auc_mean": 0.9318018106491699
+    },
+    "Random Forest": {
+      "accuracy_mean": 87.81916046695048,
+      "accuracy_sd": 1.3240849393484977,
+      "auc_mean": 0.9472978090385723
+    },
+    "GBT Classifier": {
+      "accuracy_mean": 88.09267057483247,
+      "accuracy_sd": 1.1358257705362362,
+      "auc_mean": 0.9504680225623453
     }
   },
   "configurations": {
@@ -90,6 +312,11 @@
           "FN": 0,
           "TN": 864,
           "FNR": 0.0,
+          "alerts": 864,
+          "missed_alerts": 0,
+          "unneeded_alerts": 0,
+          "majority_baseline": 61.1898016997167,
+          "train_accuracy": 100.0,
           "importances": {
             "AGE": 0.0405,
             "HS_BRANCH": 0.0014,
@@ -116,6 +343,11 @@
           "FN": 0,
           "TN": 864,
           "FNR": 0.0,
+          "alerts": 864,
+          "missed_alerts": 0,
+          "unneeded_alerts": 0,
+          "majority_baseline": 61.1898016997167,
+          "train_accuracy": 100.0,
           "importances": {
             "AGE": 0.0,
             "HS_BRANCH": 0.0,
@@ -129,7 +361,8 @@
             "GRAD_YEAR_F": 1.0
           },
           "n_nodes": 3,
-          "n_leaves": 2
+          "n_leaves": 2,
+          "depth": 1
         },
         "GBT Classifier": {
           "CA": 100.0,
@@ -144,6 +377,11 @@
           "FN": 0,
           "TN": 864,
           "FNR": 0.0,
+          "alerts": 864,
+          "missed_alerts": 0,
+          "unneeded_alerts": 0,
+          "majority_baseline": 61.1898016997167,
+          "train_accuracy": 100.0,
           "importances": {
             "AGE": 0.0,
             "HS_BRANCH": 0.0,
@@ -172,6 +410,11 @@
           "FN": 0,
           "TN": 864,
           "FNR": 0.0,
+          "alerts": 864,
+          "missed_alerts": 0,
+          "unneeded_alerts": 0,
+          "majority_baseline": 61.1898016997167,
+          "train_accuracy": 100.0,
           "importances": {
             "AGE": 0.006,
             "HS_BRANCH": 0.0028,
@@ -198,6 +441,11 @@
           "FN": 0,
           "TN": 864,
           "FNR": 0.0,
+          "alerts": 864,
+          "missed_alerts": 0,
+          "unneeded_alerts": 0,
+          "majority_baseline": 61.1898016997167,
+          "train_accuracy": 100.0,
           "importances": {
             "AGE": 0.0,
             "HS_BRANCH": 0.0,
@@ -211,7 +459,8 @@
             "GRAD_YEAR_F": 1.0
           },
           "n_nodes": 3,
-          "n_leaves": 2
+          "n_leaves": 2,
+          "depth": 1
         },
         "GBT Classifier": {
           "CA": 100.0,
@@ -226,6 +475,11 @@
           "FN": 0,
           "TN": 864,
           "FNR": 0.0,
+          "alerts": 864,
+          "missed_alerts": 0,
+          "unneeded_alerts": 0,
+          "majority_baseline": 61.1898016997167,
+          "train_accuracy": 100.0,
           "importances": {
             "AGE": 0.0,
             "HS_BRANCH": 0.0,
@@ -297,11 +551,7 @@
             100.0
           ],
           "mean": 100.0,
-          "sd": 0.0,
-          "ci": [
-            100.0,
-            100.0
-          ]
+          "sd": 0.0
         },
         "Decision Tree": {
           "folds": [
@@ -312,11 +562,7 @@
             100.0
           ],
           "mean": 100.0,
-          "sd": 0.0,
-          "ci": [
-            100.0,
-            100.0
-          ]
+          "sd": 0.0
         },
         "GBT Classifier": {
           "folds": [
@@ -327,11 +573,7 @@
             100.0
           ],
           "mean": 100.0,
-          "sd": 0.0,
-          "ci": [
-            100.0,
-            100.0
-          ]
+          "sd": 0.0
         }
       },
       "n_train": 3292,
@@ -352,6 +594,11 @@
           "FN": 66,
           "TN": 772,
           "FNR": 0.12043795620437957,
+          "alerts": 838,
+          "missed_alerts": 92,
+          "unneeded_alerts": 66,
+          "majority_baseline": 61.1898016997167,
+          "train_accuracy": 96.8104495747266,
           "importances": {
             "AGE": 0.1833,
             "HS_BRANCH": 0.0177,
@@ -376,6 +623,11 @@
           "FN": 56,
           "TN": 739,
           "FNR": 0.10218978102189781,
+          "alerts": 795,
+          "missed_alerts": 125,
+          "unneeded_alerts": 56,
+          "majority_baseline": 61.1898016997167,
+          "train_accuracy": 89.61117861482381,
           "importances": {
             "AGE": 0.1813,
             "HS_BRANCH": 0.0,
@@ -387,7 +639,8 @@
             "STD_AVG": 0.1521
           },
           "n_nodes": 79,
-          "n_leaves": 40
+          "n_leaves": 40,
+          "depth": 6
         },
         "GBT Classifier": {
           "CA": 89.1643059490085,
@@ -402,6 +655,11 @@
           "FN": 69,
           "TN": 780,
           "FNR": 0.1259124087591241,
+          "alerts": 849,
+          "missed_alerts": 84,
+          "unneeded_alerts": 69,
+          "majority_baseline": 61.1898016997167,
+          "train_accuracy": 90.70473876063183,
           "importances": {
             "AGE": 0.1858,
             "HS_BRANCH": 0.0004,
@@ -428,6 +686,11 @@
           "FN": 68,
           "TN": 747,
           "FNR": 0.12408759124087591,
+          "alerts": 815,
+          "missed_alerts": 117,
+          "unneeded_alerts": 68,
+          "majority_baseline": 61.1898016997167,
+          "train_accuracy": 99.1874240583232,
           "importances": {
             "AGE": 0.0759,
             "HS_BRANCH": 0.0215,
@@ -452,6 +715,11 @@
           "FN": 63,
           "TN": 736,
           "FNR": 0.11496350364963503,
+          "alerts": 799,
+          "missed_alerts": 128,
+          "unneeded_alerts": 63,
+          "majority_baseline": 61.1898016997167,
+          "train_accuracy": 84.99392466585662,
           "importances": {
             "AGE": 0.0272,
             "HS_BRANCH": 0.0041,
@@ -463,7 +731,8 @@
             "STD_AVG": 0.1316
           },
           "n_nodes": 85,
-          "n_leaves": 43
+          "n_leaves": 43,
+          "depth": 6
         },
         "GBT Classifier": {
           "CA": 87.74787535410765,
@@ -478,6 +747,11 @@
           "FN": 52,
           "TN": 743,
           "FNR": 0.0948905109489051,
+          "alerts": 795,
+          "missed_alerts": 121,
+          "unneeded_alerts": 52,
+          "majority_baseline": 61.1898016997167,
+          "train_accuracy": 87.04434993924666,
           "importances": {
             "AGE": 0.0305,
             "HS_BRANCH": 0.0121,
@@ -503,7 +777,9 @@
             ]
           ],
           "chi2": 4.888888888888889,
-          "p": 0.027030076547772498
+          "p": 0.027030076547772498,
+          "p_holm": 0.054060153095544995,
+          "significant_holm": false
         },
         "Random Forest vs GBT Classifier": {
           "table": [
@@ -517,7 +793,9 @@
             ]
           ],
           "chi2": 0.24615384615384617,
-          "p": 0.6197963884941329
+          "p": 0.6197963884941329,
+          "p_holm": 0.6197963884941329,
+          "significant_holm": false
         },
         "Decision Tree vs GBT Classifier": {
           "table": [
@@ -531,7 +809,9 @@
             ]
           ],
           "chi2": 7.29,
-          "p": 0.006933947606081324
+          "p": 0.006933947606081324,
+          "p_holm": 0.020801842818243974,
+          "significant_holm": true
         }
       },
       "cross_validation": {
@@ -544,11 +824,7 @@
             88.4
           ],
           "mean": 88.66916137201257,
-          "sd": 0.5766241628839279,
-          "ci": [
-            88.16372800834704,
-            89.1745947356781
-          ]
+          "sd": 0.5766241628839279
         },
         "Decision Tree": {
           "folds": [
@@ -559,11 +835,7 @@
             87.02
           ],
           "mean": 87.28735840097679,
-          "sd": 0.5414461952550792,
-          "ci": [
-            86.81275988546719,
-            87.76195691648638
-          ]
+          "sd": 0.5414461952550792
         },
         "GBT Classifier": {
           "folds": [
@@ -574,11 +846,268 @@
             89.15
           ],
           "mean": 88.49928776539218,
-          "sd": 0.6184322778283309,
-          "ci": [
-            87.95720797321214,
-            89.04136755757223
-          ]
+          "sd": 0.6184322778283309
+        }
+      },
+      "n_train": 3292,
+      "n_test": 1412
+    },
+    "B-S": {
+      "no_augmentation": {
+        "Random Forest": {
+          "CA": 81.01983002832861,
+          "CI_low": 78.89131902578556,
+          "CI_high": 82.98001512271804,
+          "AUC": 0.8924350331170586,
+          "F1": 0.7602862254025045,
+          "Precision": 0.7456140350877193,
+          "Recall": 0.7755474452554745,
+          "TP": 425,
+          "FP": 145,
+          "FN": 123,
+          "TN": 719,
+          "FNR": 0.22445255474452555,
+          "alerts": 842,
+          "missed_alerts": 145,
+          "unneeded_alerts": 123,
+          "majority_baseline": 61.1898016997167,
+          "train_accuracy": 95.56500607533415,
+          "importances": {
+            "AGE": 0.2812,
+            "HS_BRANCH": 0.022,
+            "MAJOR": 0.0294,
+            "REGION": 0.0287,
+            "HS_SCORE": 0.1422,
+            "STD_AVG": 0.4966
+          }
+        },
+        "Decision Tree": {
+          "CA": 80.09915014164307,
+          "CI_low": 77.93623095228308,
+          "CI_high": 82.09873939729235,
+          "AUC": 0.875341097256015,
+          "F1": 0.747982062780269,
+          "Precision": 0.7354497354497355,
+          "Recall": 0.7609489051094891,
+          "TP": 417,
+          "FP": 150,
+          "FN": 131,
+          "TN": 714,
+          "FNR": 0.23905109489051096,
+          "alerts": 845,
+          "missed_alerts": 150,
+          "unneeded_alerts": 131,
+          "majority_baseline": 61.1898016997167,
+          "train_accuracy": 84.38639125151883,
+          "importances": {
+            "AGE": 0.3907,
+            "HS_BRANCH": 0.0,
+            "MAJOR": 0.0012,
+            "REGION": 0.0029,
+            "HS_SCORE": 0.0395,
+            "STD_AVG": 0.5657
+          },
+          "n_nodes": 97,
+          "n_leaves": 49,
+          "depth": 6
+        },
+        "GBT Classifier": {
+          "CA": 81.65722379603399,
+          "CI_low": 79.5535948989881,
+          "CI_high": 83.58906803338888,
+          "AUC": 0.8977964906055691,
+          "F1": 0.7677130044843049,
+          "Precision": 0.7548500881834215,
+          "Recall": 0.781021897810219,
+          "TP": 428,
+          "FP": 139,
+          "FN": 120,
+          "TN": 725,
+          "FNR": 0.21897810218978103,
+          "alerts": 845,
+          "missed_alerts": 139,
+          "unneeded_alerts": 120,
+          "majority_baseline": 61.1898016997167,
+          "train_accuracy": 85.54070473876064,
+          "importances": {
+            "AGE": 0.3747,
+            "HS_BRANCH": 0.0008,
+            "MAJOR": 0.0051,
+            "REGION": 0.0031,
+            "HS_SCORE": 0.0383,
+            "STD_AVG": 0.5781
+          }
+        }
+      },
+      "with_augmentation": {
+        "Random Forest": {
+          "CA": 78.04532577903683,
+          "CI_low": 75.81174715166382,
+          "CI_high": 80.1267193387641,
+          "AUC": 0.8674029298459043,
+          "F1": 0.7097378277153558,
+          "Precision": 0.7288461538461538,
+          "Recall": 0.6916058394160584,
+          "TP": 379,
+          "FP": 141,
+          "FN": 169,
+          "TN": 723,
+          "FNR": 0.3083941605839416,
+          "alerts": 892,
+          "missed_alerts": 141,
+          "unneeded_alerts": 169,
+          "majority_baseline": 61.1898016997167,
+          "train_accuracy": 98.3368772782503,
+          "importances": {
+            "AGE": 0.1846,
+            "HS_BRANCH": 0.0296,
+            "MAJOR": 0.0377,
+            "REGION": 0.0374,
+            "HS_SCORE": 0.2045,
+            "STD_AVG": 0.5063
+          }
+        },
+        "Decision Tree": {
+          "CA": 77.40793201133145,
+          "CI_low": 75.15403092753417,
+          "CI_high": 79.51310677902042,
+          "AUC": 0.8621618596242228,
+          "F1": 0.7252368647717485,
+          "Precision": 0.6867862969004894,
+          "Recall": 0.7682481751824818,
+          "TP": 421,
+          "FP": 192,
+          "FN": 127,
+          "TN": 672,
+          "FNR": 0.23175182481751824,
+          "alerts": 799,
+          "missed_alerts": 192,
+          "unneeded_alerts": 127,
+          "majority_baseline": 61.1898016997167,
+          "train_accuracy": 76.3973268529769,
+          "importances": {
+            "AGE": 0.1061,
+            "HS_BRANCH": 0.0295,
+            "MAJOR": 0.0014,
+            "REGION": 0.0116,
+            "HS_SCORE": 0.0644,
+            "STD_AVG": 0.7869
+          },
+          "n_nodes": 115,
+          "n_leaves": 58,
+          "depth": 6
+        },
+        "GBT Classifier": {
+          "CA": 81.30311614730878,
+          "CI_low": 79.1855540740253,
+          "CI_high": 83.25081508953316,
+          "AUC": 0.8849900310894836,
+          "F1": 0.7621621621621621,
+          "Precision": 0.7526690391459074,
+          "Recall": 0.7718978102189781,
+          "TP": 423,
+          "FP": 139,
+          "FN": 125,
+          "TN": 725,
+          "FNR": 0.2281021897810219,
+          "alerts": 850,
+          "missed_alerts": 139,
+          "unneeded_alerts": 125,
+          "majority_baseline": 61.1898016997167,
+          "train_accuracy": 78.24270959902795,
+          "importances": {
+            "AGE": 0.1209,
+            "HS_BRANCH": 0.0287,
+            "MAJOR": 0.0092,
+            "REGION": 0.0065,
+            "HS_SCORE": 0.0812,
+            "STD_AVG": 0.7535
+          }
+        }
+      },
+      "mcnemar": {
+        "Random Forest vs Decision Tree": {
+          "table": [
+            [
+              1067,
+              77
+            ],
+            [
+              64,
+              204
+            ]
+          ],
+          "chi2": 1.0212765957446808,
+          "p": 0.31221638834331633,
+          "p_holm": 0.6244327766866327,
+          "significant_holm": false
+        },
+        "Random Forest vs GBT Classifier": {
+          "table": [
+            [
+              1107,
+              37
+            ],
+            [
+              46,
+              222
+            ]
+          ],
+          "chi2": 0.7710843373493976,
+          "p": 0.3798818127990695,
+          "p_holm": 0.6244327766866327,
+          "significant_holm": false
+        },
+        "Decision Tree vs GBT Classifier": {
+          "table": [
+            [
+              1081,
+              50
+            ],
+            [
+              72,
+              209
+            ]
+          ],
+          "chi2": 3.6147540983606556,
+          "p": 0.057269187470827196,
+          "p_holm": 0.17180756241248157,
+          "significant_holm": false
+        }
+      },
+      "cross_validation": {
+        "Random Forest": {
+          "folds": [
+            81.62,
+            82.68,
+            80.98,
+            83.1,
+            80.43
+          ],
+          "mean": 81.75992041060888,
+          "sd": 1.1247620183071625
+        },
+        "Decision Tree": {
+          "folds": [
+            81.4,
+            80.98,
+            81.51,
+            81.4,
+            80.53
+          ],
+          "mean": 81.16483143780947,
+          "sd": 0.4084437911019712
+        },
+        "GBT Classifier": {
+          "folds": [
+            82.15,
+            83.0,
+            82.36,
+            82.15,
+            81.81
+          ],
+          "mean": 82.2915639767563,
+          "sd": 0.44081953070050167
         }
       },
       "n_train": 3292,
@@ -599,6 +1128,11 @@
           "FN": 261,
           "TN": 672,
           "FNR": 0.4762773722627737,
+          "alerts": 933,
+          "missed_alerts": 192,
+          "unneeded_alerts": 261,
+          "majority_baseline": 61.1898016997167,
+          "train_accuracy": 89.58080194410692,
           "importances": {
             "AGE": 0.4175,
             "HS_BRANCH": 0.0482,
@@ -620,6 +1154,11 @@
           "FN": 283,
           "TN": 685,
           "FNR": 0.5164233576642335,
+          "alerts": 968,
+          "missed_alerts": 179,
+          "unneeded_alerts": 283,
+          "majority_baseline": 61.1898016997167,
+          "train_accuracy": 71.20291616038882,
           "importances": {
             "AGE": 0.5821,
             "HS_BRANCH": 0.126,
@@ -628,7 +1167,8 @@
             "HS_SCORE": 0.1894
           },
           "n_nodes": 97,
-          "n_leaves": 49
+          "n_leaves": 49,
+          "depth": 6
         },
         "GBT Classifier": {
           "CA": 70.46742209631728,
@@ -643,6 +1183,11 @@
           "FN": 237,
           "TN": 684,
           "FNR": 0.4324817518248175,
+          "alerts": 921,
+          "missed_alerts": 180,
+          "unneeded_alerts": 237,
+          "majority_baseline": 61.1898016997167,
+          "train_accuracy": 73.66342648845686,
           "importances": {
             "AGE": 0.5622,
             "HS_BRANCH": 0.0812,
@@ -666,6 +1211,11 @@
           "FN": 294,
           "TN": 703,
           "FNR": 0.5364963503649635,
+          "alerts": 997,
+          "missed_alerts": 161,
+          "unneeded_alerts": 294,
+          "majority_baseline": 61.1898016997167,
+          "train_accuracy": 93.93226002430134,
           "importances": {
             "AGE": 0.406,
             "HS_BRANCH": 0.0507,
@@ -687,6 +1237,11 @@
           "FN": 348,
           "TN": 739,
           "FNR": 0.635036496350365,
+          "alerts": 1087,
+          "missed_alerts": 125,
+          "unneeded_alerts": 348,
+          "majority_baseline": 61.1898016997167,
+          "train_accuracy": 66.54769137302551,
           "importances": {
             "AGE": 0.2829,
             "HS_BRANCH": 0.3035,
@@ -695,7 +1250,8 @@
             "HS_SCORE": 0.2109
           },
           "n_nodes": 117,
-          "n_leaves": 59
+          "n_leaves": 59,
+          "depth": 6
         },
         "GBT Classifier": {
           "CA": 67.28045325779037,
@@ -710,6 +1266,11 @@
           "FN": 356,
           "TN": 758,
           "FNR": 0.6496350364963503,
+          "alerts": 1114,
+          "missed_alerts": 106,
+          "unneeded_alerts": 356,
+          "majority_baseline": 61.1898016997167,
+          "train_accuracy": 67.70200486026732,
           "importances": {
             "AGE": 0.3101,
             "HS_BRANCH": 0.2543,
@@ -732,7 +1293,9 @@
             ]
           ],
           "chi2": 0.2140468227424749,
-          "p": 0.6436138682650684
+          "p": 0.6436138682650684,
+          "p_holm": 0.6436138682650684,
+          "significant_holm": false
         },
         "Random Forest vs GBT Classifier": {
           "table": [
@@ -746,7 +1309,9 @@
             ]
           ],
           "chi2": 4.822834645669292,
-          "p": 0.028085121645157186
+          "p": 0.028085121645157186,
+          "p_holm": 0.05617024329031437,
+          "significant_holm": false
         },
         "Decision Tree vs GBT Classifier": {
           "table": [
@@ -760,7 +1325,9 @@
             ]
           ],
           "chi2": 10.579234972677595,
-          "p": 0.0011436497674470923
+          "p": 0.0011436497674470923,
+          "p_holm": 0.003430949302341277,
+          "significant_holm": true
         }
       },
       "cross_validation": {
@@ -773,11 +1340,7 @@
             68.09
           ],
           "mean": 68.30352499604314,
-          "sd": 1.3037358245876476,
-          "ci": [
-            67.16075016007909,
-            69.44629983200718
-          ]
+          "sd": 1.3037358245876476
         },
         "Decision Tree": {
           "folds": [
@@ -788,11 +1351,7 @@
             67.55
           ],
           "mean": 68.1333800619531,
-          "sd": 0.7704728858255767,
-          "ci": [
-            67.45803080092274,
-            68.80872932298347
-          ]
+          "sd": 0.7704728858255767
         },
         "GBT Classifier": {
           "folds": [
@@ -803,11 +1362,7 @@
             70.96
           ],
           "mean": 70.38702602482647,
-          "sd": 0.655123518972088,
-          "ci": [
-            69.81278494177093,
-            70.96126710788201
-          ]
+          "sd": 0.655123518972088
         }
       },
       "n_train": 3292,
@@ -816,73 +1371,1505 @@
   },
   "fairness": {
     "Random Forest": {
+      "excluded_unknown": 0,
       "male": {
         "n": 1041,
-        "accuracy": 87.22382324687801,
-        "TPR": 0.863517060367454,
-        "FNR": 0.13648293963254593,
-        "FPR": 0.12272727272727273,
-        "selection_rate": 0.39385206532180594,
-        "base_rate": 0.3659942363112392
+        "correct": 921,
+        "incorrect": 120,
+        "TP": 325,
+        "FN": 56,
+        "FP": 64,
+        "TN": 596,
+        "accuracy": 88.47262247838617,
+        "TPR": 0.8530183727034121,
+        "FNR": 0.14698162729658792,
+        "FPR": 0.09696969696969697,
+        "selection_rate": 0.37367915465898177,
+        "base_rate": 0.3659942363112392,
+        "alerts": 652,
+        "missed_alerts": 64,
+        "non_graduates": 660
       },
       "female": {
         "n": 371,
-        "accuracy": 85.98382749326146,
-        "TPR": 0.9041916167664671,
-        "FNR": 0.09580838323353294,
-        "FPR": 0.17647058823529413,
-        "selection_rate": 0.5040431266846361,
-        "base_rate": 0.4501347708894879
+        "correct": 333,
+        "incorrect": 38,
+        "TP": 157,
+        "FN": 10,
+        "FP": 28,
+        "TN": 176,
+        "accuracy": 89.75741239892183,
+        "TPR": 0.9401197604790419,
+        "FNR": 0.059880239520958084,
+        "FPR": 0.13725490196078433,
+        "selection_rate": 0.49865229110512127,
+        "base_rate": 0.4501347708894879,
+        "alerts": 186,
+        "missed_alerts": 28,
+        "non_graduates": 204
       },
-      "demographic_parity_difference": -0.11019106136283019,
-      "equal_opportunity_difference": -0.04067455639901307,
-      "base_rate_difference": -0.08414053457824872
+      "demographic_parity_difference": -0.1249731364461395,
+      "demographic_parity_ci": [
+        -0.18325776523619883,
+        -0.06624662832781861
+      ],
+      "equal_opportunity_difference": -0.08710138777562981,
+      "equal_opportunity_ci": [
+        -0.13461632171391238,
+        -0.03037041554530262
+      ],
+      "fpr_difference": -0.040285204991087356,
+      "fpr_ci": [
+        -0.09794195118759214,
+        0.007338134749173407
+      ],
+      "accuracy_difference": -0.012847899205356584,
+      "accuracy_ci": [
+        -0.04686167102873255,
+        0.02654407528910724
+      ],
+      "base_rate_difference": -0.08414053457824872,
+      "base_rate_ci": [
+        -0.14256484449923615,
+        -0.026105941460832387
+      ]
     },
     "Decision Tree": {
+      "excluded_unknown": 0,
       "male": {
         "n": 1041,
-        "accuracy": 86.35926993275696,
+        "correct": 897,
+        "incorrect": 144,
+        "TP": 331,
+        "FN": 50,
+        "FP": 94,
+        "TN": 566,
+        "accuracy": 86.1671469740634,
         "TPR": 0.868766404199475,
         "FNR": 0.13123359580052493,
-        "FPR": 0.1393939393939394,
-        "selection_rate": 0.40634005763688763,
-        "base_rate": 0.3659942363112392
+        "FPR": 0.14242424242424243,
+        "selection_rate": 0.40826128722382327,
+        "base_rate": 0.3659942363112392,
+        "alerts": 616,
+        "missed_alerts": 94,
+        "non_graduates": 660
       },
       "female": {
         "n": 371,
-        "accuracy": 86.79245283018868,
-        "TPR": 0.9221556886227545,
-        "FNR": 0.07784431137724551,
-        "FPR": 0.17647058823529413,
-        "selection_rate": 0.5121293800539084,
-        "base_rate": 0.4501347708894879
+        "correct": 334,
+        "incorrect": 37,
+        "TP": 161,
+        "FN": 6,
+        "FP": 31,
+        "TN": 173,
+        "accuracy": 90.02695417789758,
+        "TPR": 0.9640718562874252,
+        "FNR": 0.03592814371257485,
+        "FPR": 0.15196078431372548,
+        "selection_rate": 0.5175202156334232,
+        "base_rate": 0.4501347708894879,
+        "alerts": 179,
+        "missed_alerts": 31,
+        "non_graduates": 204
       },
-      "demographic_parity_difference": -0.10578932241702077,
-      "equal_opportunity_difference": -0.053389284423279504,
-      "base_rate_difference": -0.08414053457824872
+      "demographic_parity_difference": -0.10925892840959994,
+      "demographic_parity_ci": [
+        -0.16764674849901517,
+        -0.05021928532788711
+      ],
+      "equal_opportunity_difference": -0.09530545208795016,
+      "equal_opportunity_ci": [
+        -0.1376113160549079,
+        -0.04496915886057723
+      ],
+      "fpr_difference": -0.009536541889483052,
+      "fpr_ci": [
+        -0.07038801100986822,
+        0.04200939045511316
+      ],
+      "accuracy_difference": -0.0385980720383418,
+      "accuracy_ci": [
+        -0.07324205621833482,
+        0.0012878585155593897
+      ],
+      "base_rate_difference": -0.08414053457824872,
+      "base_rate_ci": [
+        -0.14256484449923615,
+        -0.026105941460832387
+      ]
     },
     "GBT Classifier": {
+      "excluded_unknown": 0,
       "male": {
         "n": 1041,
-        "accuracy": 87.41594620557157,
-        "TPR": 0.884514435695538,
-        "FNR": 0.11548556430446194,
-        "FPR": 0.1318181818181818,
-        "selection_rate": 0.40730067243035545,
-        "base_rate": 0.3659942363112392
+        "correct": 922,
+        "incorrect": 119,
+        "TP": 321,
+        "FN": 60,
+        "FP": 59,
+        "TN": 601,
+        "accuracy": 88.56868395773296,
+        "TPR": 0.84251968503937,
+        "FNR": 0.15748031496062992,
+        "FPR": 0.0893939393939394,
+        "selection_rate": 0.36503362151777136,
+        "base_rate": 0.3659942363112392,
+        "alerts": 661,
+        "missed_alerts": 59,
+        "non_graduates": 660
       },
       "female": {
         "n": 371,
-        "accuracy": 88.67924528301887,
-        "TPR": 0.9520958083832335,
-        "FNR": 0.04790419161676647,
-        "FPR": 0.16666666666666666,
-        "selection_rate": 0.5202156334231806,
-        "base_rate": 0.4501347708894879
+        "correct": 337,
+        "incorrect": 34,
+        "TP": 158,
+        "FN": 9,
+        "FP": 25,
+        "TN": 179,
+        "accuracy": 90.83557951482479,
+        "TPR": 0.9461077844311377,
+        "FNR": 0.05389221556886228,
+        "FPR": 0.12254901960784313,
+        "selection_rate": 0.49326145552560646,
+        "base_rate": 0.4501347708894879,
+        "alerts": 188,
+        "missed_alerts": 25,
+        "non_graduates": 204
       },
-      "demographic_parity_difference": -0.11291496099282511,
-      "equal_opportunity_difference": -0.06758137268769548,
-      "base_rate_difference": -0.08414053457824872
+      "demographic_parity_difference": -0.1282278340078351,
+      "demographic_parity_ci": [
+        -0.18647114731451525,
+        -0.06960826792227726
+      ],
+      "equal_opportunity_difference": -0.10358809939176772,
+      "equal_opportunity_ci": [
+        -0.15088486680295968,
+        -0.047427253727477595
+      ],
+      "fpr_difference": -0.03315508021390373,
+      "fpr_ci": [
+        -0.08876953223737777,
+        0.012025687656574961
+      ],
+      "accuracy_difference": -0.022668955570918286,
+      "accuracy_ci": [
+        -0.05541505084328334,
+        0.015495254519787068
+      ],
+      "base_rate_difference": -0.08414053457824872,
+      "base_rate_ci": [
+        -0.14256484449923615,
+        -0.026105941460832387
+      ]
+    }
+  },
+  "fairness_check_pooled_correct": {
+    "Random Forest": 1254,
+    "Decision Tree": 1231,
+    "GBT Classifier": 1259
+  },
+  "sensitivity": {
+    "excluding_still_enrolled": {
+      "B": {
+        "n_train": 2573,
+        "n_test": 1104,
+        "results": {
+          "Random Forest": {
+            "CA": 90.76086956521739,
+            "CI_low": 88.9084875718286,
+            "CI_high": 92.33057356224893,
+            "AUC": 0.9562897127553432,
+            "F1": 0.9114583333333334,
+            "Precision": 0.8692052980132451,
+            "Recall": 0.958029197080292,
+            "TP": 525,
+            "FP": 79,
+            "FN": 23,
+            "TN": 477,
+            "FNR": 0.041970802919708027,
+            "alerts": 500,
+            "missed_alerts": 79,
+            "unneeded_alerts": 23,
+            "majority_baseline": 50.36231884057971,
+            "train_accuracy": 96.9685192382433,
+            "importances": {
+              "AGE": 0.0476,
+              "HS_BRANCH": 0.0144,
+              "MAJOR": 0.0156,
+              "REGION": 0.0183,
+              "HS_SCORE": 0.0615,
+              "NORMAL_SMTR_COUNT": 0.4438,
+              "SIFI_SMTR_COUNT": 0.0782,
+              "STD_AVG": 0.3207
+            }
+          },
+          "Decision Tree": {
+            "CA": 90.39855072463769,
+            "CI_low": 88.51798568763515,
+            "CI_high": 91.99895045858392,
+            "AUC": 0.9391147665808959,
+            "F1": 0.909556313993174,
+            "Precision": 0.8541666666666666,
+            "Recall": 0.9726277372262774,
+            "TP": 533,
+            "FP": 91,
+            "FN": 15,
+            "TN": 465,
+            "FNR": 0.02737226277372263,
+            "alerts": 480,
+            "missed_alerts": 91,
+            "unneeded_alerts": 15,
+            "majority_baseline": 50.36231884057971,
+            "train_accuracy": 91.68286047415468,
+            "importances": {
+              "AGE": 0.0175,
+              "HS_BRANCH": 0.0,
+              "MAJOR": 0.0,
+              "REGION": 0.0038,
+              "HS_SCORE": 0.0174,
+              "NORMAL_SMTR_COUNT": 0.7839,
+              "SIFI_SMTR_COUNT": 0.0205,
+              "STD_AVG": 0.1569
+            },
+            "n_nodes": 81,
+            "n_leaves": 41,
+            "depth": 6
+          },
+          "GBT Classifier": {
+            "CA": 91.03260869565217,
+            "CI_low": 89.20187706698492,
+            "CI_high": 92.57877780798644,
+            "AUC": 0.9573071469831433,
+            "F1": 0.9144338807260155,
+            "Precision": 0.8686371100164204,
+            "Recall": 0.9653284671532847,
+            "TP": 529,
+            "FP": 80,
+            "FN": 19,
+            "TN": 476,
+            "FNR": 0.03467153284671533,
+            "alerts": 495,
+            "missed_alerts": 80,
+            "unneeded_alerts": 19,
+            "majority_baseline": 50.36231884057971,
+            "train_accuracy": 92.80994947532064,
+            "importances": {
+              "AGE": 0.0139,
+              "HS_BRANCH": 0.0013,
+              "MAJOR": 0.0026,
+              "REGION": 0.0039,
+              "HS_SCORE": 0.0126,
+              "NORMAL_SMTR_COUNT": 0.7372,
+              "SIFI_SMTR_COUNT": 0.025,
+              "STD_AVG": 0.2036
+            }
+          }
+        }
+      },
+      "B-S": {
+        "n_train": 2573,
+        "n_test": 1104,
+        "results": {
+          "Random Forest": {
+            "CA": 84.87318840579711,
+            "CI_low": 82.6388717847066,
+            "CI_high": 86.86565829667086,
+            "AUC": 0.9005540093472667,
+            "F1": 0.860484544695071,
+            "Precision": 0.7935285053929122,
+            "Recall": 0.9397810218978102,
+            "TP": 515,
+            "FP": 134,
+            "FN": 33,
+            "TN": 422,
+            "FNR": 0.060218978102189784,
+            "alerts": 455,
+            "missed_alerts": 134,
+            "unneeded_alerts": 33,
+            "majority_baseline": 50.36231884057971,
+            "train_accuracy": 95.25845316750875,
+            "importances": {
+              "AGE": 0.108,
+              "HS_BRANCH": 0.0235,
+              "MAJOR": 0.0298,
+              "REGION": 0.0321,
+              "HS_SCORE": 0.1384,
+              "STD_AVG": 0.6683
+            }
+          },
+          "Decision Tree": {
+            "CA": 83.69565217391305,
+            "CI_low": 81.40040988497014,
+            "CI_high": 85.75721398586728,
+            "AUC": 0.888933925852019,
+            "F1": 0.8512396694214877,
+            "Precision": 0.7779456193353474,
+            "Recall": 0.9397810218978102,
+            "TP": 515,
+            "FP": 147,
+            "FN": 33,
+            "TN": 409,
+            "FNR": 0.060218978102189784,
+            "alerts": 442,
+            "missed_alerts": 147,
+            "unneeded_alerts": 33,
+            "majority_baseline": 50.36231884057971,
+            "train_accuracy": 84.9591916051302,
+            "importances": {
+              "AGE": 0.0571,
+              "HS_BRANCH": 0.0034,
+              "MAJOR": 0.0059,
+              "REGION": 0.0067,
+              "HS_SCORE": 0.0375,
+              "STD_AVG": 0.8895
+            },
+            "n_nodes": 93,
+            "n_leaves": 47,
+            "depth": 6
+          },
+          "GBT Classifier": {
+            "CA": 84.87318840579711,
+            "CI_low": 82.6388717847066,
+            "CI_high": 86.86565829667086,
+            "AUC": 0.9042167725673476,
+            "F1": 0.8593091828138163,
+            "Precision": 0.7981220657276995,
+            "Recall": 0.9306569343065694,
+            "TP": 510,
+            "FP": 129,
+            "FN": 38,
+            "TN": 427,
+            "FNR": 0.06934306569343066,
+            "alerts": 465,
+            "missed_alerts": 129,
+            "unneeded_alerts": 38,
+            "majority_baseline": 50.36231884057971,
+            "train_accuracy": 85.65876408861251,
+            "importances": {
+              "AGE": 0.071,
+              "HS_BRANCH": 0.0034,
+              "MAJOR": 0.005,
+              "REGION": 0.0094,
+              "HS_SCORE": 0.0374,
+              "STD_AVG": 0.8738
+            }
+          }
+        }
+      },
+      "C": {
+        "n_train": 2573,
+        "n_test": 1104,
+        "results": {
+          "Random Forest": {
+            "CA": 64.4927536231884,
+            "CI_low": 61.62416683848993,
+            "CI_high": 67.26083267584875,
+            "AUC": 0.69731167620648,
+            "F1": 0.6370370370370371,
+            "Precision": 0.6466165413533834,
+            "Recall": 0.6277372262773723,
+            "TP": 344,
+            "FP": 188,
+            "FN": 204,
+            "TN": 368,
+            "FNR": 0.3722627737226277,
+            "alerts": 572,
+            "missed_alerts": 188,
+            "unneeded_alerts": 204,
+            "majority_baseline": 50.36231884057971,
+            "train_accuracy": 88.14613291877185,
+            "importances": {
+              "AGE": 0.3067,
+              "HS_BRANCH": 0.0516,
+              "MAJOR": 0.0803,
+              "REGION": 0.0927,
+              "HS_SCORE": 0.4686
+            }
+          },
+          "Decision Tree": {
+            "CA": 62.04710144927537,
+            "CI_low": 59.147481354730125,
+            "CI_high": 64.8631744915639,
+            "AUC": 0.662723835530116,
+            "F1": 0.6221821460775473,
+            "Precision": 0.6149732620320856,
+            "Recall": 0.6295620437956204,
+            "TP": 345,
+            "FP": 216,
+            "FN": 203,
+            "TN": 340,
+            "FNR": 0.3704379562043796,
+            "alerts": 543,
+            "missed_alerts": 216,
+            "unneeded_alerts": 203,
+            "majority_baseline": 50.36231884057971,
+            "train_accuracy": 67.00349786241742,
+            "importances": {
+              "AGE": 0.2134,
+              "HS_BRANCH": 0.1626,
+              "MAJOR": 0.1085,
+              "REGION": 0.1074,
+              "HS_SCORE": 0.4082
+            },
+            "n_nodes": 107,
+            "n_leaves": 54,
+            "depth": 6
+          },
+          "GBT Classifier": {
+            "CA": 64.94565217391305,
+            "CI_low": 62.08368024601844,
+            "CI_high": 67.70397550314334,
+            "AUC": 0.7093436564616921,
+            "F1": 0.6491387126019945,
+            "Precision": 0.645045045045045,
+            "Recall": 0.6532846715328468,
+            "TP": 358,
+            "FP": 197,
+            "FN": 190,
+            "TN": 359,
+            "FNR": 0.3467153284671533,
+            "alerts": 549,
+            "missed_alerts": 197,
+            "unneeded_alerts": 190,
+            "majority_baseline": 50.36231884057971,
+            "train_accuracy": 70.6956859696852,
+            "importances": {
+              "AGE": 0.2874,
+              "HS_BRANCH": 0.1161,
+              "MAJOR": 0.1046,
+              "REGION": 0.1156,
+              "HS_SCORE": 0.3763
+            }
+          }
+        }
+      },
+      "n": 3677
+    },
+    "three_outcomes": {
+      "B": {
+        "n_train": 3292,
+        "n_test": 1412,
+        "results": {
+          "Random Forest": {
+            "CA": 83.42776203966005,
+            "CI_low": 81.39813512755744,
+            "CI_high": 85.27599664891223,
+            "macro_F1": 0.8238760868519046,
+            "recall_left": 0.814748201438849,
+            "recall_graduated": 0.9105839416058394,
+            "recall_still_enrolled": 0.7337662337662337,
+            "confusion": [
+              [
+                453,
+                76,
+                27
+              ],
+              [
+                23,
+                499,
+                26
+              ],
+              [
+                44,
+                38,
+                226
+              ]
+            ],
+            "majority_baseline": 39.376770538243626,
+            "train_accuracy": 93.92466585662211,
+            "importances": {
+              "AGE": 0.3005,
+              "HS_BRANCH": 0.0143,
+              "MAJOR": 0.0207,
+              "REGION": 0.0209,
+              "HS_SCORE": 0.0901,
+              "NORMAL_SMTR_COUNT": 0.2582,
+              "SIFI_SMTR_COUNT": 0.0633,
+              "STD_AVG": 0.232
+            }
+          },
+          "Decision Tree": {
+            "CA": 82.36543909348441,
+            "CI_low": 80.29052351234662,
+            "CI_high": 84.26472695766742,
+            "macro_F1": 0.8103302082652957,
+            "recall_left": 0.8057553956834532,
+            "recall_graduated": 0.9197080291970803,
+            "recall_still_enrolled": 0.685064935064935,
+            "confusion": [
+              [
+                448,
+                86,
+                22
+              ],
+              [
+                18,
+                504,
+                26
+              ],
+              [
+                46,
+                51,
+                211
+              ]
+            ],
+            "majority_baseline": 39.376770538243626,
+            "train_accuracy": 85.84447144592953,
+            "importances": {
+              "AGE": 0.4052,
+              "HS_BRANCH": 0.0,
+              "MAJOR": 0.0033,
+              "REGION": 0.0054,
+              "HS_SCORE": 0.0056,
+              "NORMAL_SMTR_COUNT": 0.4306,
+              "SIFI_SMTR_COUNT": 0.0168,
+              "STD_AVG": 0.1332
+            },
+            "n_nodes": 115,
+            "n_leaves": 58,
+            "depth": 6
+          },
+          "GBT Classifier": {
+            "CA": 83.78186968838527,
+            "CI_low": 81.76796016771188,
+            "CI_high": 85.61246537757633,
+            "macro_F1": 0.8282963950003438,
+            "recall_left": 0.8039568345323741,
+            "recall_graduated": 0.9105839416058394,
+            "recall_still_enrolled": 0.7694805194805194,
+            "confusion": [
+              [
+                447,
+                75,
+                34
+              ],
+              [
+                17,
+                499,
+                32
+              ],
+              [
+                37,
+                34,
+                237
+              ]
+            ],
+            "majority_baseline": 39.376770538243626,
+            "train_accuracy": 87.75820170109357,
+            "importances": {
+              "AGE": 0.3626,
+              "HS_BRANCH": 0.0014,
+              "MAJOR": 0.0028,
+              "REGION": 0.0029,
+              "HS_SCORE": 0.025,
+              "NORMAL_SMTR_COUNT": 0.2886,
+              "SIFI_SMTR_COUNT": 0.0239,
+              "STD_AVG": 0.2928
+            }
+          }
+        }
+      },
+      "C": {
+        "n_train": 3292,
+        "n_test": 1412,
+        "results": {
+          "Random Forest": {
+            "CA": 62.46458923512748,
+            "CI_low": 59.90835065100335,
+            "CI_high": 64.95319001140906,
+            "macro_F1": 0.6425476353968291,
+            "recall_left": 0.5755395683453237,
+            "recall_graduated": 0.5967153284671532,
+            "recall_still_enrolled": 0.762987012987013,
+            "confusion": [
+              [
+                320,
+                181,
+                55
+              ],
+              [
+                191,
+                327,
+                30
+              ],
+              [
+                53,
+                20,
+                235
+              ]
+            ],
+            "majority_baseline": 39.376770538243626,
+            "train_accuracy": 85.96597812879708,
+            "importances": {
+              "AGE": 0.4931,
+              "HS_BRANCH": 0.0341,
+              "MAJOR": 0.0581,
+              "REGION": 0.0649,
+              "HS_SCORE": 0.3497
+            }
+          },
+          "Decision Tree": {
+            "CA": 62.46458923512748,
+            "CI_low": 59.90835065100335,
+            "CI_high": 64.95319001140906,
+            "macro_F1": 0.642099385498825,
+            "recall_left": 0.5287769784172662,
+            "recall_graduated": 0.6368613138686131,
+            "recall_still_enrolled": 0.775974025974026,
+            "confusion": [
+              [
+                294,
+                210,
+                52
+              ],
+              [
+                164,
+                349,
+                35
+              ],
+              [
+                43,
+                26,
+                239
+              ]
+            ],
+            "majority_baseline": 39.376770538243626,
+            "train_accuracy": 65.00607533414338,
+            "importances": {
+              "AGE": 0.7634,
+              "HS_BRANCH": 0.0453,
+              "MAJOR": 0.0347,
+              "REGION": 0.0292,
+              "HS_SCORE": 0.1274
+            },
+            "n_nodes": 107,
+            "n_leaves": 54,
+            "depth": 6
+          },
+          "GBT Classifier": {
+            "CA": 63.31444759206799,
+            "CI_low": 60.767681475039026,
+            "CI_high": 65.78896423253788,
+            "macro_F1": 0.650140425395503,
+            "recall_left": 0.564748201438849,
+            "recall_graduated": 0.6259124087591241,
+            "recall_still_enrolled": 0.7694805194805194,
+            "confusion": [
+              [
+                314,
+                190,
+                52
+              ],
+              [
+                173,
+                343,
+                32
+              ],
+              [
+                43,
+                28,
+                237
+              ]
+            ],
+            "majority_baseline": 39.376770538243626,
+            "train_accuracy": 69.07654921020657,
+            "importances": {
+              "AGE": 0.6932,
+              "HS_BRANCH": 0.0388,
+              "MAJOR": 0.037,
+              "REGION": 0.0426,
+              "HS_SCORE": 0.1883
+            }
+          }
+        }
+      }
+    },
+    "complete_followup": {
+      "admitted_up_to": 2014,
+      "n": 3487,
+      "still_enrolled_in_subset": 152,
+      "B": {
+        "n_train": 2440,
+        "n_test": 1047,
+        "results": {
+          "Random Forest": {
+            "CA": 87.20152817574021,
+            "CI_low": 85.04110432875706,
+            "CI_high": 89.08996401282056,
+            "AUC": 0.9384437888833718,
+            "F1": 0.8777372262773723,
+            "Precision": 0.8222222222222222,
+            "Recall": 0.9412915851272016,
+            "TP": 481,
+            "FP": 104,
+            "FN": 30,
+            "TN": 432,
+            "FNR": 0.05870841487279843,
+            "alerts": 462,
+            "missed_alerts": 104,
+            "unneeded_alerts": 30,
+            "majority_baseline": 51.193887297039154,
+            "train_accuracy": 96.39344262295081,
+            "importances": {
+              "AGE": 0.0652,
+              "HS_BRANCH": 0.019,
+              "MAJOR": 0.0195,
+              "REGION": 0.0235,
+              "HS_SCORE": 0.0775,
+              "NORMAL_SMTR_COUNT": 0.3987,
+              "SIFI_SMTR_COUNT": 0.0915,
+              "STD_AVG": 0.3051
+            }
+          },
+          "Decision Tree": {
+            "CA": 85.29130850047756,
+            "CI_low": 83.01691095395198,
+            "CI_high": 87.307684045311,
+            "AUC": 0.9120250021906124,
+            "F1": 0.86,
+            "Precision": 0.8030560271646859,
+            "Recall": 0.9256360078277887,
+            "TP": 473,
+            "FP": 116,
+            "FN": 38,
+            "TN": 420,
+            "FNR": 0.07436399217221135,
+            "alerts": 458,
+            "missed_alerts": 116,
+            "unneeded_alerts": 38,
+            "majority_baseline": 51.193887297039154,
+            "train_accuracy": 89.42622950819671,
+            "importances": {
+              "AGE": 0.0467,
+              "HS_BRANCH": 0.0,
+              "MAJOR": 0.0053,
+              "REGION": 0.0,
+              "HS_SCORE": 0.0159,
+              "NORMAL_SMTR_COUNT": 0.7567,
+              "SIFI_SMTR_COUNT": 0.028,
+              "STD_AVG": 0.1474
+            },
+            "n_nodes": 73,
+            "n_leaves": 37,
+            "depth": 6
+          },
+          "GBT Classifier": {
+            "CA": 86.53295128939828,
+            "CI_low": 84.3311005196355,
+            "CI_high": 88.467702152132,
+            "AUC": 0.9373375295732685,
+            "F1": 0.8709972552607502,
+            "Precision": 0.8178694158075601,
+            "Recall": 0.9315068493150684,
+            "TP": 476,
+            "FP": 106,
+            "FN": 35,
+            "TN": 430,
+            "FNR": 0.0684931506849315,
+            "alerts": 465,
+            "missed_alerts": 106,
+            "unneeded_alerts": 35,
+            "majority_baseline": 51.193887297039154,
+            "train_accuracy": 91.27049180327869,
+            "importances": {
+              "AGE": 0.0448,
+              "HS_BRANCH": 0.0027,
+              "MAJOR": 0.0053,
+              "REGION": 0.0045,
+              "HS_SCORE": 0.0184,
+              "NORMAL_SMTR_COUNT": 0.6839,
+              "SIFI_SMTR_COUNT": 0.0424,
+              "STD_AVG": 0.1981
+            }
+          }
+        }
+      },
+      "B-S": {
+        "n_train": 2440,
+        "n_test": 1047,
+        "results": {
+          "Random Forest": {
+            "CA": 80.22922636103151,
+            "CI_low": 77.7081796947102,
+            "CI_high": 82.52926094741898,
+            "AUC": 0.8706297280719688,
+            "F1": 0.8133453561767358,
+            "Precision": 0.754180602006689,
+            "Recall": 0.8825831702544031,
+            "TP": 451,
+            "FP": 147,
+            "FN": 60,
+            "TN": 389,
+            "FNR": 0.11741682974559686,
+            "alerts": 449,
+            "missed_alerts": 147,
+            "unneeded_alerts": 60,
+            "majority_baseline": 51.193887297039154,
+            "train_accuracy": 94.13934426229508,
+            "importances": {
+              "AGE": 0.1086,
+              "HS_BRANCH": 0.0291,
+              "MAJOR": 0.0318,
+              "REGION": 0.0357,
+              "HS_SCORE": 0.1563,
+              "STD_AVG": 0.6385
+            }
+          },
+          "Decision Tree": {
+            "CA": 79.36962750716332,
+            "CI_low": 76.81332485358996,
+            "CI_high": 81.71120278449764,
+            "AUC": 0.8533640505885445,
+            "F1": 0.8134715025906736,
+            "Precision": 0.7279752704791345,
+            "Recall": 0.9217221135029354,
+            "TP": 471,
+            "FP": 176,
+            "FN": 40,
+            "TN": 360,
+            "FNR": 0.07827788649706457,
+            "alerts": 400,
+            "missed_alerts": 176,
+            "unneeded_alerts": 40,
+            "majority_baseline": 51.193887297039154,
+            "train_accuracy": 81.72131147540983,
+            "importances": {
+              "AGE": 0.0604,
+              "HS_BRANCH": 0.0,
+              "MAJOR": 0.0055,
+              "REGION": 0.0019,
+              "HS_SCORE": 0.0457,
+              "STD_AVG": 0.8865
+            },
+            "n_nodes": 95,
+            "n_leaves": 48,
+            "depth": 6
+          },
+          "GBT Classifier": {
+            "CA": 79.65616045845272,
+            "CI_low": 77.111419811617,
+            "CI_high": 81.9840788278178,
+            "AUC": 0.8743282121681222,
+            "F1": 0.8082808280828083,
+            "Precision": 0.7483333333333333,
+            "Recall": 0.8786692759295499,
+            "TP": 449,
+            "FP": 151,
+            "FN": 62,
+            "TN": 385,
+            "FNR": 0.12133072407045009,
+            "alerts": 447,
+            "missed_alerts": 151,
+            "unneeded_alerts": 62,
+            "majority_baseline": 51.193887297039154,
+            "train_accuracy": 84.09836065573771,
+            "importances": {
+              "AGE": 0.081,
+              "HS_BRANCH": 0.004,
+              "MAJOR": 0.0053,
+              "REGION": 0.0084,
+              "HS_SCORE": 0.0556,
+              "STD_AVG": 0.8457
+            }
+          }
+        }
+      },
+      "C": {
+        "n_train": 2440,
+        "n_test": 1047,
+        "results": {
+          "Random Forest": {
+            "CA": 62.17765042979943,
+            "CI_low": 59.200749059867974,
+            "CI_high": 65.06551849738786,
+            "AUC": 0.6901342115255426,
+            "F1": 0.6047904191616766,
+            "Precision": 0.6171079429735234,
+            "Recall": 0.5929549902152642,
+            "TP": 303,
+            "FP": 188,
+            "FN": 208,
+            "TN": 348,
+            "FNR": 0.4070450097847358,
+            "alerts": 556,
+            "missed_alerts": 188,
+            "unneeded_alerts": 208,
+            "majority_baseline": 51.193887297039154,
+            "train_accuracy": 87.5,
+            "importances": {
+              "AGE": 0.291,
+              "HS_BRANCH": 0.0587,
+              "MAJOR": 0.0823,
+              "REGION": 0.0926,
+              "HS_SCORE": 0.4754
+            }
+          },
+          "Decision Tree": {
+            "CA": 61.79560649474689,
+            "CI_low": 58.8144192539408,
+            "CI_high": 64.6905536348521,
+            "AUC": 0.6700864561731461,
+            "F1": 0.6190476190476191,
+            "Precision": 0.6029684601113172,
+            "Recall": 0.6360078277886497,
+            "TP": 325,
+            "FP": 214,
+            "FN": 186,
+            "TN": 322,
+            "FNR": 0.3639921722113503,
+            "alerts": 508,
+            "missed_alerts": 214,
+            "unneeded_alerts": 186,
+            "majority_baseline": 51.193887297039154,
+            "train_accuracy": 66.35245901639344,
+            "importances": {
+              "AGE": 0.2098,
+              "HS_BRANCH": 0.2283,
+              "MAJOR": 0.0977,
+              "REGION": 0.1149,
+              "HS_SCORE": 0.3494
+            },
+            "n_nodes": 109,
+            "n_leaves": 55,
+            "depth": 6
+          },
+          "GBT Classifier": {
+            "CA": 66.189111747851,
+            "CI_low": 63.269087933683046,
+            "CI_high": 68.99077364243354,
+            "AUC": 0.7126080702164325,
+            "F1": 0.6563106796116505,
+            "Precision": 0.651252408477842,
+            "Recall": 0.6614481409001957,
+            "TP": 338,
+            "FP": 181,
+            "FN": 173,
+            "TN": 355,
+            "FNR": 0.3385518590998043,
+            "alerts": 528,
+            "missed_alerts": 181,
+            "unneeded_alerts": 173,
+            "majority_baseline": 51.193887297039154,
+            "train_accuracy": 69.4672131147541,
+            "importances": {
+              "AGE": 0.2627,
+              "HS_BRANCH": 0.1516,
+              "MAJOR": 0.0998,
+              "REGION": 0.0993,
+              "HS_SCORE": 0.3866
+            }
+          }
+        }
+      }
+    },
+    "temporal_complete_followup": {
+      "train_admitted_up_to": 2008,
+      "test_admitted": "2009-2014",
+      "B": {
+        "n_train": 2382,
+        "n_test": 1105,
+        "results": {
+          "Random Forest": {
+            "CA": 81.99095022624434,
+            "CI_low": 79.61567230676725,
+            "CI_high": 84.14456991504942,
+            "AUC": 0.8913517149971886,
+            "F1": 0.8199095022624434,
+            "Precision": 0.7156398104265402,
+            "Recall": 0.9597457627118644,
+            "TP": 453,
+            "FP": 180,
+            "FN": 19,
+            "TN": 453,
+            "FNR": 0.04025423728813559,
+            "alerts": 472,
+            "missed_alerts": 180,
+            "unneeded_alerts": 19,
+            "majority_baseline": 57.28506787330316,
+            "train_accuracy": 96.4735516372796,
+            "importances": {
+              "AGE": 0.0441,
+              "HS_BRANCH": 0.0162,
+              "MAJOR": 0.0198,
+              "REGION": 0.0184,
+              "HS_SCORE": 0.068,
+              "NORMAL_SMTR_COUNT": 0.4281,
+              "SIFI_SMTR_COUNT": 0.0782,
+              "STD_AVG": 0.3271
+            }
+          },
+          "Decision Tree": {
+            "CA": 81.08597285067873,
+            "CI_low": 78.67072574956893,
+            "CI_high": 83.28583210953721,
+            "AUC": 0.8819617372211959,
+            "F1": 0.8145519077196096,
+            "Precision": 0.7007633587786259,
+            "Recall": 0.972457627118644,
+            "TP": 459,
+            "FP": 196,
+            "FN": 13,
+            "TN": 437,
+            "FNR": 0.02754237288135593,
+            "alerts": 450,
+            "missed_alerts": 196,
+            "unneeded_alerts": 13,
+            "majority_baseline": 57.28506787330316,
+            "train_accuracy": 91.183879093199,
+            "importances": {
+              "AGE": 0.0098,
+              "HS_BRANCH": 0.0007,
+              "MAJOR": 0.0,
+              "REGION": 0.0052,
+              "HS_SCORE": 0.0093,
+              "NORMAL_SMTR_COUNT": 0.7718,
+              "SIFI_SMTR_COUNT": 0.0231,
+              "STD_AVG": 0.1801
+            },
+            "n_nodes": 73,
+            "n_leaves": 37,
+            "depth": 6
+          },
+          "GBT Classifier": {
+            "CA": 81.71945701357465,
+            "CI_low": 79.33197232489267,
+            "CI_high": 83.88716458811083,
+            "AUC": 0.8991585669531689,
+            "F1": 0.8136531365313653,
+            "Precision": 0.7205882352941176,
+            "Recall": 0.934322033898305,
+            "TP": 441,
+            "FP": 171,
+            "FN": 31,
+            "TN": 462,
+            "FNR": 0.06567796610169492,
+            "alerts": 493,
+            "missed_alerts": 171,
+            "unneeded_alerts": 31,
+            "majority_baseline": 57.28506787330316,
+            "train_accuracy": 92.02350965575147,
+            "importances": {
+              "AGE": 0.009,
+              "HS_BRANCH": 0.0012,
+              "MAJOR": 0.0046,
+              "REGION": 0.0012,
+              "HS_SCORE": 0.0184,
+              "NORMAL_SMTR_COUNT": 0.7313,
+              "SIFI_SMTR_COUNT": 0.0334,
+              "STD_AVG": 0.2009
+            }
+          }
+        }
+      },
+      "B-S": {
+        "n_train": 2382,
+        "n_test": 1105,
+        "results": {
+          "Random Forest": {
+            "CA": 76.38009049773756,
+            "CI_low": 73.78701499491697,
+            "CI_high": 78.7903841780945,
+            "AUC": 0.8378869119340241,
+            "F1": 0.7659192825112108,
+            "Precision": 0.6640746500777605,
+            "Recall": 0.9046610169491526,
+            "TP": 427,
+            "FP": 216,
+            "FN": 45,
+            "TN": 417,
+            "FNR": 0.09533898305084745,
+            "alerts": 462,
+            "missed_alerts": 216,
+            "unneeded_alerts": 45,
+            "majority_baseline": 57.28506787330316,
+            "train_accuracy": 94.3744752308984,
+            "importances": {
+              "AGE": 0.0894,
+              "HS_BRANCH": 0.0266,
+              "MAJOR": 0.0364,
+              "REGION": 0.04,
+              "HS_SCORE": 0.1481,
+              "STD_AVG": 0.6594
+            }
+          },
+          "Decision Tree": {
+            "CA": 75.56561085972851,
+            "CI_low": 72.94633186459878,
+            "CI_high": 78.00775138197322,
+            "AUC": 0.827924599030712,
+            "F1": 0.7619047619047619,
+            "Precision": 0.6525679758308157,
+            "Recall": 0.9152542372881356,
+            "TP": 432,
+            "FP": 230,
+            "FN": 40,
+            "TN": 403,
+            "FNR": 0.0847457627118644,
+            "alerts": 443,
+            "missed_alerts": 230,
+            "unneeded_alerts": 40,
+            "majority_baseline": 57.28506787330316,
+            "train_accuracy": 84.1309823677582,
+            "importances": {
+              "AGE": 0.0191,
+              "HS_BRANCH": 0.0012,
+              "MAJOR": 0.002,
+              "REGION": 0.0122,
+              "HS_SCORE": 0.047,
+              "STD_AVG": 0.9186
+            },
+            "n_nodes": 93,
+            "n_leaves": 47,
+            "depth": 6
+          },
+          "GBT Classifier": {
+            "CA": 77.0135746606335,
+            "CI_low": 74.44175343159004,
+            "CI_high": 79.39822479531881,
+            "AUC": 0.8531140386108658,
+            "F1": 0.7585551330798479,
+            "Precision": 0.6879310344827586,
+            "Recall": 0.8453389830508474,
+            "TP": 399,
+            "FP": 181,
+            "FN": 73,
+            "TN": 452,
+            "FNR": 0.15466101694915255,
+            "alerts": 525,
+            "missed_alerts": 181,
+            "unneeded_alerts": 73,
+            "majority_baseline": 57.28506787330316,
+            "train_accuracy": 84.92863140218304,
+            "importances": {
+              "AGE": 0.0389,
+              "HS_BRANCH": 0.0031,
+              "MAJOR": 0.0077,
+              "REGION": 0.013,
+              "HS_SCORE": 0.0611,
+              "STD_AVG": 0.8762
+            }
+          }
+        }
+      },
+      "C": {
+        "n_train": 2382,
+        "n_test": 1105,
+        "results": {
+          "Random Forest": {
+            "CA": 58.371040723981906,
+            "CI_low": 55.44048020357698,
+            "CI_high": 61.24360015149527,
+            "AUC": 0.6196849813907409,
+            "F1": 0.547244094488189,
+            "Precision": 0.5110294117647058,
+            "Recall": 0.5889830508474576,
+            "TP": 278,
+            "FP": 266,
+            "FN": 194,
+            "TN": 367,
+            "FNR": 0.4110169491525424,
+            "alerts": 561,
+            "missed_alerts": 266,
+            "unneeded_alerts": 194,
+            "majority_baseline": 57.28506787330316,
+            "train_accuracy": 88.53904282115869,
+            "importances": {
+              "AGE": 0.2676,
+              "HS_BRANCH": 0.0576,
+              "MAJOR": 0.0932,
+              "REGION": 0.1089,
+              "HS_SCORE": 0.4727
+            }
+          },
+          "Decision Tree": {
+            "CA": 56.56108597285068,
+            "CI_low": 53.62076157552368,
+            "CI_high": 59.45595005412755,
+            "AUC": 0.6142980025169357,
+            "F1": 0.5721925133689839,
+            "Precision": 0.4938461538461538,
+            "Recall": 0.6800847457627118,
+            "TP": 321,
+            "FP": 329,
+            "FN": 151,
+            "TN": 304,
+            "FNR": 0.3199152542372881,
+            "alerts": 455,
+            "missed_alerts": 329,
+            "unneeded_alerts": 151,
+            "majority_baseline": 57.28506787330316,
+            "train_accuracy": 68.21998320738875,
+            "importances": {
+              "AGE": 0.2098,
+              "HS_BRANCH": 0.1391,
+              "MAJOR": 0.1692,
+              "REGION": 0.1559,
+              "HS_SCORE": 0.3261
+            },
+            "n_nodes": 123,
+            "n_leaves": 62,
+            "depth": 6
+          },
+          "GBT Classifier": {
+            "CA": 60.633484162895925,
+            "CI_low": 57.720778955079254,
+            "CI_high": 63.47251230676927,
+            "AUC": 0.6431222722039254,
+            "F1": 0.4740024183796856,
+            "Precision": 0.5521126760563381,
+            "Recall": 0.4152542372881356,
+            "TP": 196,
+            "FP": 159,
+            "FN": 276,
+            "TN": 474,
+            "FNR": 0.5847457627118644,
+            "alerts": 750,
+            "missed_alerts": 159,
+            "unneeded_alerts": 276,
+            "majority_baseline": 57.28506787330316,
+            "train_accuracy": 70.52896725440806,
+            "importances": {
+              "AGE": 0.2429,
+              "HS_BRANCH": 0.1081,
+              "MAJOR": 0.1374,
+              "REGION": 0.1078,
+              "HS_SCORE": 0.4039
+            }
+          }
+        }
+      }
+    },
+    "temporal_all_cohorts": {
+      "train_admitted_up_to": 2012,
+      "test_admitted": "2013-2019",
+      "note": "later test cohorts are heavily censored",
+      "B": {
+        "n_train": 3176,
+        "n_test": 1528,
+        "results": {
+          "Random Forest": {
+            "CA": 76.8979057591623,
+            "CI_low": 74.71868692907248,
+            "CI_high": 78.94221872580033,
+            "AUC": 0.8889912280701754,
+            "F1": 0.5503184713375796,
+            "Precision": 0.3877917414721723,
+            "Recall": 0.9473684210526315,
+            "TP": 216,
+            "FP": 341,
+            "FN": 12,
+            "TN": 959,
+            "FNR": 0.05263157894736842,
+            "alerts": 971,
+            "missed_alerts": 341,
+            "unneeded_alerts": 12,
+            "majority_baseline": 85.07853403141361,
+            "train_accuracy": 96.34760705289672,
+            "importances": {
+              "AGE": 0.0534,
+              "HS_BRANCH": 0.0168,
+              "MAJOR": 0.0192,
+              "REGION": 0.0199,
+              "HS_SCORE": 0.0761,
+              "NORMAL_SMTR_COUNT": 0.406,
+              "SIFI_SMTR_COUNT": 0.0817,
+              "STD_AVG": 0.3268
+            }
+          },
+          "Decision Tree": {
+            "CA": 73.36387434554975,
+            "CI_low": 71.09081333828999,
+            "CI_high": 75.51975434732945,
+            "AUC": 0.8674915654520917,
+            "F1": 0.5217391304347826,
+            "Precision": 0.3563402889245586,
+            "Recall": 0.9736842105263158,
+            "TP": 222,
+            "FP": 401,
+            "FN": 6,
+            "TN": 899,
+            "FNR": 0.02631578947368421,
+            "alerts": 905,
+            "missed_alerts": 401,
+            "unneeded_alerts": 6,
+            "majority_baseline": 85.07853403141361,
+            "train_accuracy": 89.38916876574308,
+            "importances": {
+              "AGE": 0.018,
+              "HS_BRANCH": 0.0,
+              "MAJOR": 0.0053,
+              "REGION": 0.0041,
+              "HS_SCORE": 0.0074,
+              "NORMAL_SMTR_COUNT": 0.7762,
+              "SIFI_SMTR_COUNT": 0.0183,
+              "STD_AVG": 0.1707
+            },
+            "n_nodes": 79,
+            "n_leaves": 40,
+            "depth": 6
+          },
+          "GBT Classifier": {
+            "CA": 76.76701570680629,
+            "CI_low": 74.58396901358554,
+            "CI_high": 78.81581301279638,
+            "AUC": 0.8965856950067477,
+            "F1": 0.5489199491740788,
+            "Precision": 0.38640429338103754,
+            "Recall": 0.9473684210526315,
+            "TP": 216,
+            "FP": 343,
+            "FN": 12,
+            "TN": 957,
+            "FNR": 0.05263157894736842,
+            "alerts": 969,
+            "missed_alerts": 343,
+            "unneeded_alerts": 12,
+            "majority_baseline": 85.07853403141361,
+            "train_accuracy": 90.58564231738035,
+            "importances": {
+              "AGE": 0.022,
+              "HS_BRANCH": 0.0018,
+              "MAJOR": 0.0032,
+              "REGION": 0.0017,
+              "HS_SCORE": 0.0201,
+              "NORMAL_SMTR_COUNT": 0.7142,
+              "SIFI_SMTR_COUNT": 0.0319,
+              "STD_AVG": 0.2051
+            }
+          }
+        }
+      },
+      "C": {
+        "n_train": 3176,
+        "n_test": 1528,
+        "results": {
+          "Random Forest": {
+            "CA": 53.468586387434556,
+            "CI_low": 50.9620384556465,
+            "CI_high": 55.957737699361445,
+            "AUC": 0.48961538461538456,
+            "F1": 0.2280130293159609,
+            "Precision": 0.15151515151515152,
+            "Recall": 0.4605263157894737,
+            "TP": 105,
+            "FP": 588,
+            "FN": 123,
+            "TN": 712,
+            "FNR": 0.5394736842105263,
+            "alerts": 835,
+            "missed_alerts": 588,
+            "unneeded_alerts": 123,
+            "majority_baseline": 85.07853403141361,
+            "train_accuracy": 88.28715365239294,
+            "importances": {
+              "AGE": 0.2833,
+              "HS_BRANCH": 0.0533,
+              "MAJOR": 0.0815,
+              "REGION": 0.092,
+              "HS_SCORE": 0.49
+            }
+          },
+          "Decision Tree": {
+            "CA": 44.30628272251309,
+            "CI_low": 41.83294076138868,
+            "CI_high": 46.80818139925868,
+            "AUC": 0.4912044534412956,
+            "F1": 0.22986425339366515,
+            "Precision": 0.14481185860889395,
+            "Recall": 0.5570175438596491,
+            "TP": 127,
+            "FP": 750,
+            "FN": 101,
+            "TN": 550,
+            "FNR": 0.44298245614035087,
+            "alerts": 651,
+            "missed_alerts": 750,
+            "unneeded_alerts": 101,
+            "majority_baseline": 85.07853403141361,
+            "train_accuracy": 66.183879093199,
+            "importances": {
+              "AGE": 0.2485,
+              "HS_BRANCH": 0.1249,
+              "MAJOR": 0.1153,
+              "REGION": 0.1061,
+              "HS_SCORE": 0.4052
+            },
+            "n_nodes": 121,
+            "n_leaves": 61,
+            "depth": 6
+          },
+          "GBT Classifier": {
+            "CA": 80.30104712041884,
+            "CI_low": 78.23191359763672,
+            "CI_high": 82.21820639799857,
+            "AUC": 0.589136302294197,
+            "F1": 0.2099737532808399,
+            "Precision": 0.26143790849673204,
+            "Recall": 0.17543859649122806,
+            "TP": 40,
+            "FP": 113,
+            "FN": 188,
+            "TN": 1187,
+            "FNR": 0.8245614035087719,
+            "alerts": 1375,
+            "missed_alerts": 113,
+            "unneeded_alerts": 188,
+            "majority_baseline": 85.07853403141361,
+            "train_accuracy": 69.0176322418136,
+            "importances": {
+              "AGE": 0.2351,
+              "HS_BRANCH": 0.1191,
+              "MAJOR": 0.1289,
+              "REGION": 0.0982,
+              "HS_SCORE": 0.4187
+            }
+          }
+        }
+      }
+    },
+    "survival_admission_attributes": {
+      "n_train_students": 3292,
+      "n_person_periods": 11844,
+      "events_train": 1278,
+      "odds_ratios_per_sd": {
+        "AGE": {
+          "OR": 0.9625120916250921,
+          "CI": [
+            0.9058776891865654,
+            1.0226872099658384
+          ]
+        },
+        "HS_BRANCH": {
+          "OR": 1.2186494010822775,
+          "CI": [
+            1.1428205484165945,
+            1.2995096778893624
+          ]
+        },
+        "MAJOR": {
+          "OR": 1.0203136553123169,
+          "CI": [
+            0.9532989490592659,
+            1.0920393400665132
+          ]
+        },
+        "REGION": {
+          "OR": 0.939306184340046,
+          "CI": [
+            0.8763338914457631,
+            1.0068035899922312
+          ]
+        },
+        "HS_SCORE": {
+          "OR": 1.1859411126714359,
+          "CI": [
+            1.1117284546348356,
+            1.2651077849638523
+          ]
+        }
+      },
+      "c_index_test": 0.6294445233147916,
+      "n_test_students": 1412
     }
   }
 }
